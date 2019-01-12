@@ -64,7 +64,7 @@ public class ChatTab {
     
     @Override
     public String toString() {
-        return "ChatTab{" + "chat=" + chat + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + '}';
+        return "ChatTab{" + "chat=" + chat + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + '}';
     }
     
 }
