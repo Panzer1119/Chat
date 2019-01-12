@@ -54,7 +54,6 @@ public class Main {
         if (DEBUG) {
             Logger.log("LOCALIZER=" + LOCALIZER, LogLevel.FINER);
         }
-        System.out.println("USED CHAT");
         CHAT.showFrame();
         //TODO
     }
