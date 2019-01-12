@@ -29,6 +29,9 @@ public class Chat {
     public static final Dimension STANDARD_SIZE = new Dimension(1000, 800);
     
     protected final JFrame frame = new JFrame(Main.TITLE);
+    protected final JMenuBar menuBar = new JMenuBar();
+    protected final JMenu menu_file = new JMenu("File");
+    protected final JMenuItem menuItem_file_exit = new JMenuItem("Exit");
     
     public Chat() {
         initFrame();
@@ -38,37 +41,44 @@ public class Chat {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(STANDARD_SIZE);
         frame.setLayout(new BorderLayout());
+        initMenuBar();
         initFrameListeners();
     }
     
-    protected void initFrameListeners() {
+    private void initMenuBar() {
+        menu_file.add(menuItem_file_exit);
+        menuBar.add(menu_file);
+        frame.setJMenuBar(menuBar);
+    }
+    
+    private void initFrameListeners() {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
             }
-    
+            
             @Override
             public void windowClosing(WindowEvent e) {
-                close();
+                exit();
             }
-    
+            
             @Override
             public void windowClosed(WindowEvent e) {
             }
-    
+            
             @Override
             public void windowIconified(WindowEvent e) {
             }
-    
+            
             @Override
             public void windowDeiconified(WindowEvent e) {
             }
-    
+            
             @Override
             public void windowActivated(WindowEvent e) {
             }
-    
+            
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
@@ -81,7 +91,7 @@ public class Chat {
         frame.setVisible(true);
     }
     
-    public void close() {
+    public void exit() {
         if (Main.DEBUG) {
             Logger.log("Exiting program");
         }
