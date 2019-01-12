@@ -112,11 +112,33 @@ public class Chat {
         frame.setVisible(true);
     }
     
+    public void refreshOutputArea() {
+        tabbedPane_output.invalidate();
+        tabbedPane_output.repaint();
+    }
+    
+    public void refreshInputArea() {
+        panel_input.invalidate();
+        panel_input.repaint();
+    }
+    
     public void exit() {
         if (Main.DEBUG) {
             Logger.log("Exiting program", LogLevel.FINE);
         }
         System.exit(0);
+    }
+    
+    public void renameChatTab(ChatTab chatTab, String title) {
+        tabbedPane_output.setTitleAt(chatTab.getIndex(), title);
+        chatTab.name = title;
+    }
+    
+    public ChatTab createChatTab(String name) {
+        final ChatTab chatTab = new ChatTab(this, tabbedPane_output.getTabCount(), name);
+        chatTabs.add(chatTab);
+        tabbedPane_output.addTab(name, chatTab.getScrollPane());
+        return chatTab;
     }
     
 }

@@ -16,5 +16,55 @@
 
 package de.codemakers.chat.gui;
 
+import javax.swing.*;
+
 public class ChatTab {
+    
+    protected final Chat chat;
+    protected int index;
+    protected String name;
+    protected final JScrollPane scrollPane = new JScrollPane();
+    protected final JEditorPane editorPane = new JEditorPane();
+    
+    public ChatTab(Chat chat, int index, String name) {
+        this.chat = chat;
+        this.index = index;
+        this.name = name;
+    }
+    
+    public Chat getChat() {
+        return chat;
+    }
+    
+    public int getIndex() {
+        return index;
+    }
+    
+    public ChatTab setIndex(int index) {
+        this.index = index;
+        return this;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public ChatTab setName(String name) {
+        chat.renameChatTab(this, name);
+        return this;
+    }
+    
+    public JScrollPane getScrollPane() {
+        return scrollPane;
+    }
+    
+    public JEditorPane getEditorPane() {
+        return editorPane;
+    }
+    
+    @Override
+    public String toString() {
+        return "ChatTab{" + "chat=" + chat + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + '}';
+    }
+    
 }
