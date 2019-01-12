@@ -16,10 +16,25 @@
 
 package de.codemakers.chat;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Test {
     
-    public static final void main(String[] args) throws Exception {
+    public static final String NAME = "Chat";
+    public static final JFrame FRAME = new JFrame(NAME);
     
+    public static final void main(String[] args) throws Exception {
+        initFrame();
+    }
+    
+    private static void initFrame() {
+        FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        FRAME.setPreferredSize(new Dimension(600, 500));
+        FRAME.setLayout(new BorderLayout());
+        FRAME.pack();
+        FRAME.setLocationRelativeTo(null);
+        FRAME.setVisible(true);
     }
     
 }
