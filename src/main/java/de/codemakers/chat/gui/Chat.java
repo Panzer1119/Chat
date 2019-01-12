@@ -16,10 +16,13 @@
 
 package de.codemakers.chat.gui;
 
+import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class Chat {
     
@@ -32,16 +35,57 @@ public class Chat {
     }
     
     protected void initFrame() {
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //TODO Implement WindowListener
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(STANDARD_SIZE);
         frame.setLayout(new BorderLayout());
+        initFrameListeners();
+    }
+    
+    protected void initFrameListeners() {
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+    
+            @Override
+            public void windowClosing(WindowEvent e) {
+                close();
+            }
+    
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+    
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+    
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+    
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+    
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
     }
     
     public void showFrame() {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+    
+    public void close() {
+        if (Main.DEBUG) {
+            Logger.log("Exiting program");
+        }
+        System.exit(0);
     }
     
 }

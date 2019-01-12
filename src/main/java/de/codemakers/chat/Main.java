@@ -16,13 +16,25 @@
 
 package de.codemakers.chat;
 
+import de.codemakers.base.logger.Logger;
+import de.codemakers.base.util.ArrayUtil;
+import de.codemakers.chat.gui.Chat;
+
 public class Main {
     
     public static final String NAME = "Chat";
     public static final String VERSION = "0.0";
     public static final String TITLE = NAME + " v" + VERSION;
     
+    public static boolean DEBUG = false;
+    
     public static final void main(String[] args) throws Exception {
+        if (ArrayUtil.arrayContains(args, "debug")) {
+            DEBUG = true;
+            Logger.log("Program started");
+        }
+        final Chat chat = new Chat();
+        chat.showFrame();
         //TODO
     }
     

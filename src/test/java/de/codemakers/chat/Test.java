@@ -16,13 +16,10 @@
 
 package de.codemakers.chat;
 
-import de.codemakers.chat.gui.Chat;
-
 public class Test {
     
     public static final void main(String[] args) throws Exception {
-        final Chat chat = new Chat();
-        chat.showFrame();
+        Main.main(args);
     }
     
 }
