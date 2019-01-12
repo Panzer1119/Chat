@@ -1,0 +1,5 @@
+language_code=en
+language_name_english=English
+language_name_local=English
+menu_file=File
+menuItem_file_exit=Exit

@@ -1,0 +1,5 @@
+language_code=de
+language_name_english=German
+language_name_local=Deutsch
+menu_file=Datei
+menuItem_file_exit=Beenden
