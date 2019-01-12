@@ -24,15 +24,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Chat {
     
     public static final Dimension STANDARD_SIZE = new Dimension(1000, 800);
     
+    // GUI Start
+    // JFrame
     protected final JFrame frame = new JFrame(Main.TITLE);
+    // JMenuBar
     protected final JMenuBar menuBar = new JMenuBar();
     protected final JMenu menu_file = new JMenu(Main.LOCALIZER.localize("menu_file", "File"));
     protected final JMenuItem menuItem_file_exit = new JMenuItem(Main.LOCALIZER.localize("menuItem_file_exit", "Exit"));
+    // OutputArea
+    protected final JTabbedPane tabbedPane_output = new JTabbedPane();
+    protected final List<ChatTab> chatTabs = new ArrayList<>();
+    // InputArea
+    protected final JPanel panel_input = new JPanel();
+    protected final JTextField textField_input = new JTextField();
+    protected final JButton button_send = new JButton(Main.LOCALIZER.localize("button_input_send", "Send"));
+    // GUI End
     
     public Chat() {
         initFrame();
@@ -44,6 +57,12 @@ public class Chat {
         frame.setLayout(new BorderLayout());
         initMenuBar();
         initFrameListeners();
+        frame.add(tabbedPane_output, BorderLayout.CENTER);
+        panel_input.setLayout(new BorderLayout());
+        panel_input.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel_input.add(textField_input, BorderLayout.CENTER);
+        panel_input.add(button_send, BorderLayout.EAST);
+        frame.add(panel_input, BorderLayout.SOUTH);
     }
     
     private void initMenuBar() {
