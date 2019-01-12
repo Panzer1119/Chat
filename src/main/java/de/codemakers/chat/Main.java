@@ -16,9 +16,15 @@
 
 package de.codemakers.chat;
 
+import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.ArrayUtil;
 import de.codemakers.chat.gui.Chat;
+import de.codemakers.io.file.AdvancedFile;
+import de.codemakers.lang.Localizer;
+import de.codemakers.lang.PropertiesLocalizer;
+
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     
@@ -28,13 +34,29 @@ public class Main {
     
     public static boolean DEBUG = false;
     
+    public static Localizer LOCALIZER = new PropertiesLocalizer();
+    public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chat/lang/lang_EN.txt");
+    public static final Chat CHAT;
+    
+    static {
+        Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
+        ((PropertiesLocalizer) LOCALIZER).loadFromFile(LANGUAGE_FILE_EN);
+        CHAT = new Chat();
+        //CHAT.reloadLanguage();
+    }
+    
     public static final void main(String[] args) throws Exception {
         if (ArrayUtil.arrayContains(args, "debug")) {
             DEBUG = true;
-            Logger.log("Program started");
+            AdvancedFile.DEBUG = true;
+            AdvancedFile.DEBUG_TO_STRING = true;
+            Logger.log("Program started", LogLevel.FINE);
         }
-        final Chat chat = new Chat();
-        chat.showFrame();
+        if (DEBUG) {
+            Logger.log("LOCALIZER=" + LOCALIZER, LogLevel.FINER);
+        }
+        System.out.println("USED CHAT");
+        CHAT.showFrame();
         //TODO
     }
     

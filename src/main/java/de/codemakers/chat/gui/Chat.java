@@ -16,6 +16,7 @@
 
 package de.codemakers.chat.gui;
 
+import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
 
@@ -30,8 +31,8 @@ public class Chat {
     
     protected final JFrame frame = new JFrame(Main.TITLE);
     protected final JMenuBar menuBar = new JMenuBar();
-    protected final JMenu menu_file = new JMenu("File");
-    protected final JMenuItem menuItem_file_exit = new JMenuItem("Exit");
+    protected final JMenu menu_file = new JMenu(Main.LOCALIZER.localize("menu_file", "File"));
+    protected final JMenuItem menuItem_file_exit = new JMenuItem(Main.LOCALIZER.localize("menuItem_file_exit", "Exit"));
     
     public Chat() {
         initFrame();
@@ -46,6 +47,7 @@ public class Chat {
     }
     
     private void initMenuBar() {
+        menuItem_file_exit.addActionListener((event) -> exit());
         menu_file.add(menuItem_file_exit);
         menuBar.add(menu_file);
         frame.setJMenuBar(menuBar);
@@ -93,7 +95,7 @@ public class Chat {
     
     public void exit() {
         if (Main.DEBUG) {
-            Logger.log("Exiting program");
+            Logger.log("Exiting program", LogLevel.FINE);
         }
         System.exit(0);
     }

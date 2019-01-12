@@ -16,14 +16,9 @@
 
 package de.codemakers.chat;
 
-import de.codemakers.base.logger.Logger;
-
-import java.time.format.DateTimeFormatter;
-
 public class Test {
     
     public static final void main(String[] args) throws Exception {
-        Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
         Main.main(args);
     }
     
