@@ -42,7 +42,6 @@ public class Main {
         Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
         ((PropertiesLocalizer) LOCALIZER).loadFromFile(LANGUAGE_FILE_EN);
         CHAT = new Chat();
-        //CHAT.reloadLanguage();
     }
     
     public static final void main(String[] args) throws Exception {
