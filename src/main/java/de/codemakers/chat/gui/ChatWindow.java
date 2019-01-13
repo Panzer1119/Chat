@@ -22,6 +22,8 @@ import de.codemakers.chat.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.time.Instant;
@@ -61,25 +63,48 @@ public class ChatWindow {
         frame.add(tabbedPane_output, BorderLayout.CENTER);
         panel_input.setLayout(new BorderLayout());
         panel_input.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        panel_input.add(textField_input, BorderLayout.CENTER);
-        button_send.addActionListener((event) -> {
-            send();
+        textField_input.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+    
+            @Override
+            public void keyPressed(KeyEvent e) {
+                //Logger.log("KeyEvent=" + e + ", KeyCode=" + e.getKeyCode());
+                if (e.getKeyCode() == 10) {
+                    send();
+                }
+            }
+    
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
         });
+        panel_input.add(textField_input, BorderLayout.CENTER);
+        button_send.addActionListener((event) -> send());
         panel_input.add(button_send, BorderLayout.EAST);
         frame.add(panel_input, BorderLayout.SOUTH);
     }
     
-    private void send() {
+    private boolean send() {
         final Instant instant = Instant.now();
         final String text = textField_input.getText();
         final ChatTab chatTab = getCurrentChatTab();
+        if (chatTab == null || text.trim().isEmpty()) { //TODO Trim the text just for this test or in general? Because maybe you want to have whitespaces at the start and end, because formatting
+            focusTextField();
+            return false;
+        }
         try {
             if (chatTab.getChat().send(text, instant)) {
                 textField_input.setText("");
+                focusTextField();
+                return true;
             }
         } catch (Exception ex) {
             Logger.handleError(ex);
         }
+        focusTextField();
+        return false;
     }
     
     private void initMenuBar() {
@@ -126,6 +151,7 @@ public class ChatWindow {
     public void showFrame() {
         frame.pack();
         frame.setLocationRelativeTo(null);
+        focusTextField();
         frame.setVisible(true);
     }
     
@@ -171,6 +197,10 @@ public class ChatWindow {
             return null;
         }
         return getChatTabFromTabIndex(tabbedPane_output.getSelectedIndex());
+    }
+    
+    public void focusTextField() {
+        textField_input.requestFocus();
     }
     
 }
