@@ -16,13 +16,15 @@
 
 package de.codemakers.chat.gui;
 
+import de.codemakers.base.exceptions.NotYetImplementedRuntimeException;
 import de.codemakers.base.util.interfaces.Startable;
 import de.codemakers.base.util.interfaces.Stoppable;
 
 import java.io.Closeable;
+import java.io.IOException;
 
 public class ChatSource implements Closeable, Startable, Stoppable {
-
+    
     protected final ChatTab chatTab;
     
     public ChatSource(ChatTab chatTab) {
@@ -32,21 +34,21 @@ public class ChatSource implements Closeable, Startable, Stoppable {
     public ChatTab getChatTab() {
         return chatTab;
     }
-
+    
     @Override
     public boolean start() throws Exception {
-    
+        throw new NotYetImplementedRuntimeException();
     }
     
     @Override
     public boolean stop() throws Exception {
-    
+        throw new NotYetImplementedRuntimeException();
     }
     
     @Override
     public void close() throws IOException {
-    
+        throw new NotYetImplementedRuntimeException();
     }
-
-
+    
+    
 }
