@@ -23,11 +23,17 @@ import de.codemakers.io.file.AdvancedFile;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class FileChat extends Chat {
+    
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"); //TODO Temp only
     
     protected final AdvancedFile advancedFile;
     protected boolean started = false;
@@ -57,8 +63,14 @@ public class FileChat extends Chat {
         if (!started) {
             throw new CJPException("Not started");
         }
-        bufferedWriter.write("" + message);
+        Instant instant = Instant.now();
+        if (arguments.length >= 1 && arguments[0] instanceof Instant) {
+            instant = (Instant) arguments[0];
+        }
+        final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getUsername(), message);
         bufferedWriter.newLine();
+        bufferedWriter.write(temp);
+        bufferedWriter.flush();
         return true;
     }
     
@@ -104,7 +116,7 @@ public class FileChat extends Chat {
     
     @Override
     public String toString() {
-        return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + '}';
+        return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + ", username='" + username + '}';
     }
     
 }

@@ -25,6 +25,7 @@ import java.io.Closeable;
 public abstract class Chat implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
+    protected String username;
     
     public Chat(ChatTab chatTab) {
         this.chatTab = chatTab;
@@ -34,11 +35,20 @@ public abstract class Chat implements Closeable, Startable, Stoppable {
         return chatTab;
     }
     
+    public String getUsername() {
+        return username;
+    }
+    
+    public Chat setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+    
     public abstract boolean send(Object message, Object... arguments) throws Exception;
     
     @Override
     public String toString() {
-        return "Chat{" + "chatTab=" + chatTab + '}';
+        return "Chat{" + "chatTab=" + chatTab + ", username='" + username + '\'' + '}';
     }
     
 }
