@@ -42,11 +42,13 @@ public class Test {
                 fileChat.setUsername("Panzer1119");
                 chatTab.setChat(fileChat);
                 fileChat.start();
+                /* //Is done via Exit Hooks
                 Standard.async(() -> {
                     Thread.sleep(10000);
                     fileChat.stop();
                     fileChat.close();
                 });
+                */
             });
         });
     }
