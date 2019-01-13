@@ -17,7 +17,6 @@
 package de.codemakers.chat.connector;
 
 import de.codemakers.base.exceptions.CJPException;
-import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.gui.ChatTab;
@@ -62,8 +61,6 @@ public class FileChat extends Chat {
     }
     
     protected void update() throws Exception {
-        Logger.log("Updating FileChat", LogLevel.FINER); //TODO Debug only
-        Logger.log("AdvancedFile content: " + new String(advancedFile.readBytes()), LogLevel.FINER); //TODO Debug only
         chatTab.getEditorPane().setText(new String(advancedFile.readBytes()));
     }
     
