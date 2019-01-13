@@ -37,6 +37,11 @@ public class ChatTab implements Closeable, Startable, Stoppable {
         this.chatWindow = chatWindow;
         this.index = index;
         this.name = name;
+        init();
+    }
+    
+    protected void init() {
+        scrollPane.add(editorPane);
     }
     
     public ChatWindow getChatWindow() {
