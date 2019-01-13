@@ -25,6 +25,7 @@ public class ChatTab {
     protected String name;
     protected final JScrollPane scrollPane = new JScrollPane();
     protected final JEditorPane editorPane = new JEditorPane();
+    protected ChatSource chatSource = null;
     
     public ChatTab(Chat chat, int index, String name) {
         this.chat = chat;
@@ -62,9 +63,18 @@ public class ChatTab {
         return editorPane;
     }
     
+    public ChatSource getChatSource() {
+        return chatSource;
+    }
+    
+    public ChatTab setChatSource(ChatSource chatSource) {
+        this.chatSource = chatSource;
+        return this;
+    }
+    
     @Override
     public String toString() {
-        return "ChatTab{" + "chat=" + chat + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + '}';
+        return "ChatTab{" + "chat=" + chat + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + ", chatSource=" + chatSource + '}';
     }
     
 }
