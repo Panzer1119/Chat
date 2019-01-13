@@ -27,8 +27,8 @@ import java.io.IOException;
 public class ChatTab implements Closeable, Startable, Stoppable {
     
     protected final ChatWindow chatWindow;
-    protected final JScrollPane scrollPane = new JScrollPane();
     protected final JEditorPane editorPane = new JEditorPane();
+    protected final JScrollPane scrollPane = new JScrollPane(editorPane);
     protected int index;
     protected String name;
     protected Chat chat;
@@ -37,11 +37,6 @@ public class ChatTab implements Closeable, Startable, Stoppable {
         this.chatWindow = chatWindow;
         this.index = index;
         this.name = name;
-        init();
-    }
-    
-    protected void init() {
-        scrollPane.add(editorPane);
     }
     
     public ChatWindow getChatWindow() {
