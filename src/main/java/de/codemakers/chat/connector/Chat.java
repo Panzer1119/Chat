@@ -14,21 +14,19 @@
  *    limitations under the License.
  */
 
-package de.codemakers.chat.source;
+package de.codemakers.chat.connector;
 
-import de.codemakers.base.exceptions.NotYetImplementedRuntimeException;
 import de.codemakers.base.util.interfaces.Startable;
 import de.codemakers.base.util.interfaces.Stoppable;
 import de.codemakers.chat.gui.ChatTab;
 
 import java.io.Closeable;
-import java.io.IOException;
 
-public abstract class ChatSource implements Closeable, Startable, Stoppable {
+public abstract class Chat implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
     
-    public ChatSource(ChatTab chatTab) {
+    public Chat(ChatTab chatTab) {
         this.chatTab = chatTab;
     }
     
@@ -36,20 +34,11 @@ public abstract class ChatSource implements Closeable, Startable, Stoppable {
         return chatTab;
     }
     
-    @Override
-    public boolean start() throws Exception {
-        throw new NotYetImplementedRuntimeException();
-    }
+    public abstract boolean send(Object message, Object... arguments) throws Exception;
     
     @Override
-    public boolean stop() throws Exception {
-        throw new NotYetImplementedRuntimeException();
+    public String toString() {
+        return "Chat{" + "chatTab=" + chatTab + '}';
     }
-    
-    @Override
-    public void close() throws IOException {
-        throw new NotYetImplementedRuntimeException();
-    }
-    
     
 }

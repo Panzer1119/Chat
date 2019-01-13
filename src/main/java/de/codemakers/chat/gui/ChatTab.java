@@ -16,18 +16,22 @@
 
 package de.codemakers.chat.gui;
 
-import de.codemakers.chat.source.ChatSource;
+import de.codemakers.base.util.interfaces.Startable;
+import de.codemakers.base.util.interfaces.Stoppable;
+import de.codemakers.chat.connector.Chat;
 
 import javax.swing.*;
+import java.io.Closeable;
+import java.io.IOException;
 
-public class ChatTab {
+public class ChatTab implements Closeable, Startable, Stoppable {
     
     protected final ChatWindow chatWindow;
-    protected int index;
-    protected String name;
     protected final JScrollPane scrollPane = new JScrollPane();
     protected final JEditorPane editorPane = new JEditorPane();
-    protected ChatSource chatSource = null;
+    protected int index;
+    protected String name;
+    protected Chat chat;
     
     public ChatTab(ChatWindow chatWindow, int index, String name) {
         this.chatWindow = chatWindow;
@@ -65,18 +69,41 @@ public class ChatTab {
         return editorPane;
     }
     
-    public ChatSource getChatSource() {
-        return chatSource;
+    public Chat getChat() {
+        return chat;
     }
     
-    public ChatTab setChatSource(ChatSource chatSource) {
-        this.chatSource = chatSource;
+    public ChatTab setChat(Chat chat) {
+        this.chat = chat;
         return this;
     }
     
     @Override
     public String toString() {
-        return "ChatTab{" + "chatWindow=" + chatWindow + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + ", chatSource=" + chatSource + '}';
+        return "ChatTab{" + "chatWindow=" + chatWindow + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + ", index=" + index + ", name='" + name + '\'' + ", chat=" + chat + '}';
+    }
+    
+    @Override
+    public boolean start() throws Exception {
+        if (chat == null) {
+            return false;
+        }
+        return chat.start();
+    }
+    
+    @Override
+    public boolean stop() throws Exception {
+        if (chat == null) {
+            return false;
+        }
+        return chat.stop();
+    }
+    
+    @Override
+    public void close() throws IOException {
+        if (chat != null) {
+            chat.close();
+        }
     }
     
 }
