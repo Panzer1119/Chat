@@ -25,7 +25,7 @@ import java.io.Closeable;
 public abstract class Chat implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
-    protected String username;
+    protected String username = null;
     
     public Chat(ChatTab chatTab) {
         this.chatTab = chatTab;

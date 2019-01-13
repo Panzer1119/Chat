@@ -19,7 +19,9 @@ package de.codemakers.chat;
 import de.codemakers.base.Standard;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
+import de.codemakers.chat.connector.FileChat;
 import de.codemakers.chat.gui.ChatTab;
+import de.codemakers.io.file.AdvancedFile;
 
 public class Test {
     
@@ -35,6 +37,10 @@ public class Test {
                 Thread.sleep(2000);
                 chatTab.setName("Test 2");
                 Logger.log("Renamed ChatTab", LogLevel.FINER);
+                final AdvancedFile advancedFile = new AdvancedFile("test/chat/test123.txt");
+                final FileChat fileChat = new FileChat(chatTab, advancedFile);
+                fileChat.setUsername("Panzer1119");
+                chatTab.setChat(fileChat);
             });
         });
     }

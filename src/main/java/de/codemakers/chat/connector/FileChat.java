@@ -79,6 +79,9 @@ public class FileChat extends Chat {
         if (started) {
             return false;
         }
+        if (!advancedFile.exists()) {
+            advancedFile.createNewFile();
+        }
         bufferedWriter = advancedFile.createBufferedWriter(false);
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
