@@ -24,6 +24,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +62,24 @@ public class ChatWindow {
         panel_input.setLayout(new BorderLayout());
         panel_input.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panel_input.add(textField_input, BorderLayout.CENTER);
+        button_send.addActionListener((event) -> {
+            send();
+        });
         panel_input.add(button_send, BorderLayout.EAST);
         frame.add(panel_input, BorderLayout.SOUTH);
+    }
+    
+    private void send() {
+        final Instant instant = Instant.now();
+        final String text = textField_input.getText();
+        final ChatTab chatTab = getCurrentChatTab();
+        try {
+            if (chatTab.getChat().send(text, instant)) {
+                textField_input.setText("");
+            }
+        } catch (Exception ex) {
+            Logger.handleError(ex);
+        }
     }
     
     private void initMenuBar() {
@@ -123,6 +140,7 @@ public class ChatWindow {
     }
     
     public void exit() {
+        Main.runExitHooks();
         if (Main.DEBUG) {
             Logger.log("Exiting program", LogLevel.FINE);
         }
@@ -139,6 +157,20 @@ public class ChatWindow {
         chatTabs.add(chatTab);
         tabbedPane_output.addTab(name, chatTab.getScrollPane());
         return chatTab;
+    }
+    
+    public ChatTab getChatTabFromTabIndex(int index) {
+        if (tabbedPane_output.getTabCount() <= 0) {
+            return null;
+        }
+        return chatTabs.stream().filter((chatTab) -> chatTab.getIndex() == index).findFirst().orElse(null);
+    }
+    
+    public ChatTab getCurrentChatTab() {
+        if (tabbedPane_output.getTabCount() <= 0) {
+            return null;
+        }
+        return getChatTabFromTabIndex(tabbedPane_output.getSelectedIndex());
     }
     
 }

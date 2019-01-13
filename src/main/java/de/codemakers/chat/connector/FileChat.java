@@ -18,6 +18,7 @@ package de.codemakers.chat.connector;
 
 import de.codemakers.base.exceptions.CJPException;
 import de.codemakers.base.logger.Logger;
+import de.codemakers.chat.Main;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.io.file.AdvancedFile;
 
@@ -45,6 +46,10 @@ public class FileChat extends Chat {
         super(chatTab);
         Objects.requireNonNull(advancedFile);
         this.advancedFile = advancedFile;
+        Main.EXIT_HOOKS.add(() -> {
+            stop();
+            close();
+        }); //FIXME Only for testing
     }
     
     public boolean isStarted() {
@@ -69,8 +74,8 @@ public class FileChat extends Chat {
             instant = (Instant) arguments[0];
         }
         final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getUsername(), message);
-        bufferedWriter.newLine();
         bufferedWriter.write(temp);
+        bufferedWriter.newLine();
         bufferedWriter.flush();
         return true;
     }

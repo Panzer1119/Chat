@@ -19,24 +19,26 @@ package de.codemakers.chat;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.ArrayUtil;
+import de.codemakers.base.util.tough.ToughRunnable;
 import de.codemakers.chat.gui.ChatWindow;
 import de.codemakers.io.file.AdvancedFile;
 import de.codemakers.lang.Localizer;
 import de.codemakers.lang.PropertiesLocalizer;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     
     public static final String NAME = "Chat";
     public static final String VERSION = "0.0";
     public static final String TITLE = NAME + " v" + VERSION;
-    
-    public static boolean DEBUG = false;
-    
-    public static Localizer LOCALIZER = new PropertiesLocalizer();
     public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chatWindow/lang/lang_EN.txt");
     public static final ChatWindow CHAT_WINDOW;
+    public static final List<ToughRunnable> EXIT_HOOKS = new ArrayList<>();
+    public static boolean DEBUG = false;
+    public static Localizer LOCALIZER = new PropertiesLocalizer();
     
     static {
         Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
@@ -56,6 +58,10 @@ public class Main {
         }
         CHAT_WINDOW.showFrame();
         //TODO
+    }
+    
+    public static void runExitHooks() {
+        EXIT_HOOKS.forEach((toughRunnable) -> toughRunnable.run(Logger::handleError));
     }
     
 }
