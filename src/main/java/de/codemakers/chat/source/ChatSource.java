@@ -14,16 +14,17 @@
  *    limitations under the License.
  */
 
-package de.codemakers.chat.gui;
+package de.codemakers.chat.source;
 
 import de.codemakers.base.exceptions.NotYetImplementedRuntimeException;
 import de.codemakers.base.util.interfaces.Startable;
 import de.codemakers.base.util.interfaces.Stoppable;
+import de.codemakers.chat.gui.ChatTab;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-public class ChatSource implements Closeable, Startable, Stoppable {
+public abstract class ChatSource implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
     

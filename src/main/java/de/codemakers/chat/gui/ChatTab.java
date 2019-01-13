@@ -16,6 +16,8 @@
 
 package de.codemakers.chat.gui;
 
+import de.codemakers.chat.source.ChatSource;
+
 import javax.swing.*;
 
 public class ChatTab {
