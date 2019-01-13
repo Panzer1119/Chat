@@ -22,6 +22,7 @@ import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.io.file.AdvancedFile;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -80,7 +81,9 @@ public class FileChat extends Chat {
             return false;
         }
         if (!advancedFile.exists()) {
-            advancedFile.createNewFile();
+            if (!advancedFile.createNewFile()) {
+                throw new FileNotFoundException(advancedFile.getAbsolutePath() + " could not be created");
+            }
         }
         bufferedWriter = advancedFile.createBufferedWriter(false);
         timer = new Timer();

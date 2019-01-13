@@ -41,6 +41,12 @@ public class Test {
                 final FileChat fileChat = new FileChat(chatTab, advancedFile);
                 fileChat.setUsername("Panzer1119");
                 chatTab.setChat(fileChat);
+                fileChat.start();
+                Standard.async(() -> {
+                    Thread.sleep(10000);
+                    fileChat.stop();
+                    fileChat.close();
+                });
             });
         });
     }
