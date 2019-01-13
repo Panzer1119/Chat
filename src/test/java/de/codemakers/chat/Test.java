@@ -28,7 +28,7 @@ public class Test {
         Standard.async(() -> {
             Logger.log("Waiting to add ChatTab", LogLevel.FINER);
             Thread.sleep(2000);
-            final ChatTab chatTab = Main.CHAT.createChatTab("Test 1");
+            final ChatTab chatTab = Main.CHAT_WINDOW.createChatTab("Test 1");
             Logger.log("Created ChatTab", LogLevel.FINER);
             Standard.async(() -> {
                 Logger.log("Waiting to rename ChatTab", LogLevel.FINER);

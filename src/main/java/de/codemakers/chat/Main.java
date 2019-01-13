@@ -19,7 +19,7 @@ package de.codemakers.chat;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.ArrayUtil;
-import de.codemakers.chat.gui.Chat;
+import de.codemakers.chat.gui.ChatWindow;
 import de.codemakers.io.file.AdvancedFile;
 import de.codemakers.lang.Localizer;
 import de.codemakers.lang.PropertiesLocalizer;
@@ -35,13 +35,13 @@ public class Main {
     public static boolean DEBUG = false;
     
     public static Localizer LOCALIZER = new PropertiesLocalizer();
-    public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chat/lang/lang_EN.txt");
-    public static final Chat CHAT;
+    public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chatWindow/lang/lang_EN.txt");
+    public static final ChatWindow CHAT_WINDOW;
     
     static {
         Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
         ((PropertiesLocalizer) LOCALIZER).loadFromFile(LANGUAGE_FILE_EN);
-        CHAT = new Chat();
+        CHAT_WINDOW = new ChatWindow();
     }
     
     public static final void main(String[] args) throws Exception {
@@ -54,7 +54,7 @@ public class Main {
         if (DEBUG) {
             Logger.log("LOCALIZER=" + LOCALIZER, LogLevel.FINER);
         }
-        CHAT.showFrame();
+        CHAT_WINDOW.showFrame();
         //TODO
     }
     

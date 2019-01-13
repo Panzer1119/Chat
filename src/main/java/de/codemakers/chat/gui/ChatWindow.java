@@ -27,7 +27,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chat {
+public class ChatWindow {
     
     public static final Dimension STANDARD_SIZE = new Dimension(1000, 800);
     
@@ -47,7 +47,7 @@ public class Chat {
     protected final JButton button_send = new JButton(Main.LOCALIZER.localize("button_input_send", "Send"));
     // GUI End
     
-    public Chat() {
+    public ChatWindow() {
         initFrame();
     }
     

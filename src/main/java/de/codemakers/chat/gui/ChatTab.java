@@ -22,21 +22,21 @@ import javax.swing.*;
 
 public class ChatTab {
     
-    protected final Chat chat;
+    protected final ChatWindow chatWindow;
     protected int index;
     protected String name;
     protected final JScrollPane scrollPane = new JScrollPane();
     protected final JEditorPane editorPane = new JEditorPane();
     protected ChatSource chatSource = null;
     
-    public ChatTab(Chat chat, int index, String name) {
-        this.chat = chat;
+    public ChatTab(ChatWindow chatWindow, int index, String name) {
+        this.chatWindow = chatWindow;
         this.index = index;
         this.name = name;
     }
     
-    public Chat getChat() {
-        return chat;
+    public ChatWindow getChatWindow() {
+        return chatWindow;
     }
     
     public int getIndex() {
@@ -53,7 +53,7 @@ public class ChatTab {
     }
     
     public ChatTab setName(String name) {
-        chat.renameChatTab(this, name);
+        chatWindow.renameChatTab(this, name);
         return this;
     }
     
@@ -76,7 +76,7 @@ public class ChatTab {
     
     @Override
     public String toString() {
-        return "ChatTab{" + "chat=" + chat + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + ", chatSource=" + chatSource + '}';
+        return "ChatTab{" + "chatWindow=" + chatWindow + ", index=" + index + ", name='" + name + '\'' + ", scrollPane=" + scrollPane + ", editorPane=" + editorPane + ", chatSource=" + chatSource + '}';
     }
     
 }
