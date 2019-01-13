@@ -61,7 +61,12 @@ public class FileChat extends Chat {
     }
     
     protected void update() throws Exception {
-        chatTab.getEditorPane().setText(new String(advancedFile.readBytes()));
+        final String text_old = chatTab.getEditorPane().getText();
+        final String text_new = new String(advancedFile.readBytes());
+        if (!Objects.equals(text_old, text_new)) {
+            chatTab.getEditorPane().setText(text_new);
+            scrollToBottom();
+        }
     }
     
     @Override
@@ -128,6 +133,10 @@ public class FileChat extends Chat {
     @Override
     public String toString() {
         return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + ", username='" + username + '}';
+    }
+    
+    protected void scrollToBottom() {
+        chatTab.getEditorPane().setCaretPosition(chatTab.getEditorPane().getText().length());
     }
     
 }
