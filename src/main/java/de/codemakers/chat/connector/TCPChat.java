@@ -130,7 +130,8 @@ public class TCPChat extends Chat {
     
     private void onNetMessage(NetMessage netMessage, Instant instant) {
         final String temp = String.format("[%s] %s (%s): %s", ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), netMessage.getUsername(), netMessage.getSource(), netMessage.getContent());
-        chatTab.getEditorPane().setText(chatTab.getEditorPane().getText() + "\n" + temp);
+        final String text_old = chatTab.getEditorPane().getText();
+        chatTab.getEditorPane().setText((text_old.isEmpty() ? "" : text_old + "\n") + temp);
         scrollEditorPaneToBottom();
     }
     
