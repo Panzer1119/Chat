@@ -21,7 +21,6 @@ import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.gui.ChatTab;
-import de.codemakers.io.file.AdvancedFile;
 
 import java.net.InetAddress;
 

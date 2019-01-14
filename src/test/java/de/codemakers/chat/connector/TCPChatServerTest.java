@@ -40,6 +40,10 @@ public class TCPChatServerTest {
     public static final AtomicLong PING = new AtomicLong(Long.MIN_VALUE);
     public static final int PORT = 3453;
     
+    static {
+        Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
+    }
+    
     public static final void main(String[] args) throws Exception {
         final ServerSocket serverSocket = new ServerSocket(PORT);
         Logger.log(String.format("[SERVER] serverSocket=%s", serverSocket));
@@ -104,6 +108,7 @@ public class TCPChatServerTest {
                         }
                     } else if (netObject instanceof NetMessage) {
                         final NetMessage netMessage = (NetMessage) netObject;
+                        Logger.log(String.format("[SERVER][%s][%d] echoing back to %s: \"%s\"", timestamp_string, netMessage.getId(), netMessage.getClass().getSimpleName(), netMessage));
                         advancedSocket.getOutputStream(ObjectOutputStream.class).writeObject(netMessage);
                     } else {
                         //System.out.println(String.format("[SERVER][%s][%d] %s: \"%s\"", timestamp_string, netObject.getId(), NetObject.class.getSimpleName(), netObject));
