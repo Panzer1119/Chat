@@ -16,9 +16,11 @@
 
 package de.codemakers.chat.entities;
 
+import de.codemakers.base.util.IDTimeUtil;
 import de.codemakers.net.entities.NetObject;
 
 import java.net.InetAddress;
+import java.time.Instant;
 
 public class NetMessage extends NetObject {
     
@@ -26,15 +28,8 @@ public class NetMessage extends NetObject {
     protected final Object content;
     protected final String username;
     
-    public NetMessage(InetAddress source, Object content, String username) {
-        super();
-        this.source = source;
-        this.content = content;
-        this.username = username;
-    }
-    
-    public NetMessage(long id, InetAddress source, Object content, String username) {
-        super(id);
+    public NetMessage(InetAddress source, Object content, String username, Instant instant) {
+        super(IDTimeUtil.createId(instant.toEpochMilli()));
         this.source = source;
         this.content = content;
         this.username = username;
