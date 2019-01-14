@@ -38,11 +38,11 @@ public class Main {
     public static final ChatWindow CHAT_WINDOW;
     public static final List<ToughRunnable> EXIT_HOOKS = new ArrayList<>();
     public static boolean DEBUG = false;
-    public static Localizer LOCALIZER = new PropertiesLocalizer();
+    public static PropertiesLocalizer LOCALIZER = new PropertiesLocalizer();
     
     static {
         Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
-        ((PropertiesLocalizer) LOCALIZER).loadFromFile(LANGUAGE_FILE_EN);
+        LOCALIZER.loadFromFile(LANGUAGE_FILE_EN);
         CHAT_WINDOW = new ChatWindow();
     }
     
