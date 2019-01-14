@@ -108,7 +108,7 @@ public class TCPChatServerTest {
                         }
                     } else if (netObject instanceof NetMessage) {
                         final NetMessage netMessage = (NetMessage) netObject;
-                        Logger.log(String.format("[SERVER][%s][%d] echoing back to %s: \"%s\"", timestamp_string, netMessage.getId(), netMessage.getClass().getSimpleName(), netMessage));
+                        Logger.log(String.format("[SERVER][%s][%d] echoing %s back to %s (%s): \"%s\"", timestamp_string, netMessage.getId(), netMessage.getClass().getSimpleName(), netMessage.getUsername(), netMessage.getSource(), netMessage));
                         advancedSocket.getOutputStream(ObjectOutputStream.class).writeObject(netMessage);
                     } else {
                         //System.out.println(String.format("[SERVER][%s][%d] %s: \"%s\"", timestamp_string, netObject.getId(), NetObject.class.getSimpleName(), netObject));
