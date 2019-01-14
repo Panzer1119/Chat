@@ -109,7 +109,7 @@ public class ChatWindow {
             return false;
         }
         try {
-            if (chatTab.getChat().send(text, instant)) {
+            if (chatTab.send(text, instant)) {
                 textField_input.setText("");
                 focusTextField();
                 return true;

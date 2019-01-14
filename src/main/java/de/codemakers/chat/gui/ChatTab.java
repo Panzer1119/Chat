@@ -106,4 +106,11 @@ public class ChatTab implements Closeable, Startable, Stoppable {
         }
     }
     
+    public boolean send(Object message, Object... arguments) throws Exception {
+        if (chat == null) {
+            return false;
+        }
+        return chat.send(message, arguments);
+    }
+    
 }

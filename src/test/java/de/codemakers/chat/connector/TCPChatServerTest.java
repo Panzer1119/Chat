@@ -48,7 +48,7 @@ public class TCPChatServerTest {
         final ServerSocket serverSocket = new ServerSocket(PORT);
         Logger.log(String.format("[SERVER] serverSocket=%s", serverSocket));
         final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        final TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -60,7 +60,8 @@ public class TCPChatServerTest {
                     Logger.handleError(ex);
                 }
             }
-        }, 20000);
+        };
+        timer.schedule(timerTask, 20000);
         boolean shutdownRequested = false;
         Socket socket = null;
         outer:
@@ -129,6 +130,10 @@ public class TCPChatServerTest {
             }
         }
         Logger.log(String.format("[SERVER] shutdownRequested=%b", shutdownRequested));
+        if (shutdownRequested) {
+            timer.cancel();
+            timerTask.run();
+        }
     }
     
 }
