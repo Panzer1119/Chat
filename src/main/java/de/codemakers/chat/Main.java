@@ -22,7 +22,6 @@ import de.codemakers.base.util.ArrayUtil;
 import de.codemakers.base.util.tough.ToughRunnable;
 import de.codemakers.chat.gui.ChatWindow;
 import de.codemakers.io.file.AdvancedFile;
-import de.codemakers.lang.Localizer;
 import de.codemakers.lang.PropertiesLocalizer;
 
 import java.time.format.DateTimeFormatter;
