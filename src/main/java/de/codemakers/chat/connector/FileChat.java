@@ -65,7 +65,7 @@ public class FileChat extends Chat {
         final String text_new = new String(advancedFile.readBytes());
         if (!Objects.equals(text_old, text_new)) {
             chatTab.getEditorPane().setText(text_new);
-            scrollToBottom();
+            scrollEditorPaneToBottom();
         }
     }
     
@@ -133,10 +133,6 @@ public class FileChat extends Chat {
     @Override
     public String toString() {
         return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + ", username='" + username + '}';
-    }
-    
-    protected void scrollToBottom() {
-        chatTab.getEditorPane().setCaretPosition(chatTab.getEditorPane().getText().length());
     }
     
 }

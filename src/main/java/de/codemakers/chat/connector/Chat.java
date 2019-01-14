@@ -46,6 +46,10 @@ public abstract class Chat implements Closeable, Startable, Stoppable {
     
     public abstract boolean send(Object message, Object... arguments) throws Exception;
     
+    protected void scrollEditorPaneToBottom() {
+        chatTab.getEditorPane().setCaretPosition(chatTab.getEditorPane().getText().length());
+    }
+    
     @Override
     public String toString() {
         return "Chat{" + "chatTab=" + chatTab + ", username='" + username + '\'' + '}';
