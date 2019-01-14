@@ -19,6 +19,7 @@ package de.codemakers.chat.connector;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.tough.ToughRunnable;
+import de.codemakers.chat.Main;
 import de.codemakers.chat.entities.NetMessage;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.net.entities.NetCommand;
@@ -32,6 +33,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TCPChat extends Chat {
@@ -43,6 +45,11 @@ public class TCPChat extends Chat {
     
     public TCPChat(ChatTab chatTab, InetAddress inetAddress, int port) {
         super(chatTab);
+        Objects.requireNonNull(inetAddress);
+        Main.EXIT_HOOKS.add(() -> {
+            stop();
+            close();
+        }); //FIXME Only for testing?
         processingSocket = new ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object>(inetAddress, port) {
             @Override
             protected ObjectOutputStream toInternOutputStream(OutputStream outputStream) throws Exception {
@@ -129,7 +136,16 @@ public class TCPChat extends Chat {
     
     @Override
     public boolean send(Object message, Object... arguments) throws Exception {
-        return false;
+        Instant instant = Instant.now();
+        if (arguments.length >= 1 && arguments[0] instanceof Instant) {
+            instant = (Instant) arguments[0];
+        }
+        if (processingSocket == null || !processingSocket.isConnected()) {
+            return false;
+        }
+        //processingSocket.getOutputStream().writeObject(message); //message is most likely a String, but we want to send NetMessage type objects
+        processingSocket.getOutputStream().writeObject(new NetMessage(processingSocket.getInetAddress(), message, getUsername(), instant));
+        return true;
     }
     
     @Override

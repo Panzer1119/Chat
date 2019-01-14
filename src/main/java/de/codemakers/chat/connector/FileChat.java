@@ -49,7 +49,7 @@ public class FileChat extends Chat {
         Main.EXIT_HOOKS.add(() -> {
             stop();
             close();
-        }); //FIXME Only for testing
+        }); //FIXME Only for testing?
     }
     
     public boolean isStarted() {
