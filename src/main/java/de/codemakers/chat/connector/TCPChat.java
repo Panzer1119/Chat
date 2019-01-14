@@ -96,6 +96,7 @@ public class TCPChat extends Chat {
                                     } else if (netObject instanceof NetMessage) {
                                         final NetMessage netMessage = (NetMessage) netObject;
                                         Logger.log(String.format("[CLIENT][%s][%d] %s from %s (%s): \"%s\"", timestamp_string, netMessage.getId(), netMessage.getClass().getSimpleName(), netMessage.getUsername(), netMessage.getSource(), netMessage.getContent()), LogLevel.FINE);
+                                        onNetMessage(netMessage, instant);
                                     } else {
                                         //System.out.println(String.format("[CLIENT][%s][%d] %s: \"%s\"", timestamp_string, netObject.getId(), NetObject.class.getSimpleName(), netObject));
                                         Logger.log(String.format("[CLIENT][%s][%d] %s: \"%s\"", timestamp_string, netObject.getId(), netObject.getClass().getSimpleName(), netObject), LogLevel.FINER);
@@ -118,6 +119,12 @@ public class TCPChat extends Chat {
             }
             
         };
+    }
+    
+    private void onNetMessage(NetMessage netMessage, Instant instant) {
+        final String temp = String.format("[%s] %s (%s): %s", ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), netMessage.getUsername(), netMessage.getSource(), netMessage.getContent());
+        chatTab.getEditorPane().setText(chatTab.getEditorPane().getText() + "\n" + temp);
+        scrollEditorPaneToBottom();
     }
     
     @Override
