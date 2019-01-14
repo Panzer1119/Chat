@@ -33,11 +33,13 @@ public class Main {
     public static final String NAME = "Chat";
     public static final String VERSION = "0.0";
     public static final String TITLE = NAME + " v" + VERSION;
-    public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chatWindow/lang/lang_EN.txt");
+    
+    public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chat/lang/lang_EN.txt");
+    public static PropertiesLocalizer LOCALIZER = new PropertiesLocalizer();
+    
     public static final ChatWindow CHAT_WINDOW;
     public static final List<ToughRunnable> EXIT_HOOKS = new ArrayList<>();
     public static boolean DEBUG = false;
-    public static PropertiesLocalizer LOCALIZER = new PropertiesLocalizer();
     
     static {
         Logger.DEFAULT_ADVANCED_LEVELED_LOGGER.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"));
