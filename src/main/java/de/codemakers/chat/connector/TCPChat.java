@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class TCPChat extends Chat {
     
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"); //TODO Temp only
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
     protected final AtomicLong ping = new AtomicLong(Long.MIN_VALUE);
     protected final ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object> processingSocket;
@@ -135,6 +135,9 @@ public class TCPChat extends Chat {
     
     @Override
     public boolean stop() throws Exception {
+        if (processingSocket != null && processingSocket.isConnected()) {
+            processingSocket.getOutputStream().writeObject("shutdown");
+        }
         if (!processingSocket.disconnect()) {
             return false;
         }
