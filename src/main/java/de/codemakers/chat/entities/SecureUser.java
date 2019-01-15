@@ -31,6 +31,7 @@ public class SecureUser extends User implements Encryptor, Decryptor {
     
     public static String AES_MODE_STANDARD = AESCryptUtil.MODE_AES_CBC_PKCS5Padding;
     
+    //TODO Maybe just have an Encryptor and an Decryptor object, which are accessible with via this wrapper class? So the user can implement his own cryptography
     protected String aes_mode = AES_MODE_STANDARD;
     private SecretKey secretKey = null;
     private transient Cipher cipher_encrypt = null;

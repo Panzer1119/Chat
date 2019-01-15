@@ -27,6 +27,7 @@ import java.security.PublicKey;
 
 public class TrustedUser extends SecureUser implements Signer, Verifier {
     
+    //TODO Maybe just have an Signer and an Verifier object, which are accessible with via this wrapper class? So the user can implement his own sign/verify procedure
     protected PublicKey publicKey = null;
     private PrivateKey privateKey = null;
     protected transient Verifier verifier = null;
