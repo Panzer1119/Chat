@@ -16,7 +16,10 @@
 
 package de.codemakers.chat.entities;
 
+import javax.crypto.SecretKey;
 import java.net.InetAddress;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 public class NetUser extends TrustedUser {
     
@@ -25,6 +28,62 @@ public class NetUser extends TrustedUser {
     
     public NetUser(String username) {
         super(username);
+    }
+    
+    public NetUser(String username, SecretKey secretKey) {
+        super(username, secretKey);
+    }
+    
+    public NetUser(String username, PublicKey publicKey) {
+        super(username, publicKey);
+    }
+    
+    public NetUser(String username, PublicKey publicKey, PrivateKey privateKey) {
+        super(username, publicKey, privateKey);
+    }
+    
+    public NetUser(String username, SecretKey secretKey, PublicKey publicKey) {
+        super(username, secretKey, publicKey);
+    }
+    
+    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, PrivateKey privateKey) {
+        super(username, secretKey, publicKey, privateKey);
+    }
+    
+    public NetUser(String username, InetAddress inetAddress, int port) {
+        super(username);
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
+    
+    public NetUser(String username, SecretKey secretKey, InetAddress inetAddress, int port) {
+        super(username, secretKey);
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
+    
+    public NetUser(String username, PublicKey publicKey, InetAddress inetAddress, int port) {
+        super(username, publicKey);
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
+    
+    public NetUser(String username, PublicKey publicKey, PrivateKey privateKey, InetAddress inetAddress, int port) {
+        super(username, publicKey, privateKey);
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
+    
+    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, InetAddress inetAddress, int port) {
+        super(username, secretKey, publicKey);
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
+    
+    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, PrivateKey privateKey, InetAddress inetAddress, int port) {
+        super(username, secretKey, publicKey, privateKey);
+        this.inetAddress = inetAddress;
+        this.port = port;
     }
     
     public InetAddress getInetAddress() {
