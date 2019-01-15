@@ -21,7 +21,7 @@ import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.tough.ToughRunnable;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.entities.NetMessage;
-import de.codemakers.chat.entities.User;
+import de.codemakers.chat.entities.NetUser;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.net.entities.NetCommand;
 import de.codemakers.net.entities.NetObject;
@@ -37,14 +37,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TCPChat<U extends User> extends Chat<U> {
+public class TCPChat extends Chat<NetUser> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
     protected final AtomicLong ping = new AtomicLong(Long.MIN_VALUE);
     protected final ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object> processingSocket;
     
-    public TCPChat(ChatTab chatTab, U selfUser, InetAddress inetAddress, int port) {
+    public TCPChat(ChatTab chatTab, NetUser selfUser, InetAddress inetAddress, int port) {
         super(chatTab, selfUser);
         Objects.requireNonNull(inetAddress);
         Main.EXIT_HOOKS.add(() -> {
