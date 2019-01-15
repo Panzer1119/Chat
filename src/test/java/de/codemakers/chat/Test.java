@@ -20,6 +20,7 @@ import de.codemakers.base.Standard;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.connector.FileChat;
+import de.codemakers.chat.entities.User;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.io.file.AdvancedFile;
 
@@ -38,17 +39,11 @@ public class Test {
                 chatTab.setName("Test 2");
                 Logger.log("Renamed ChatTab", LogLevel.FINER);
                 final AdvancedFile advancedFile = new AdvancedFile("test/chat/test123.txt");
-                final FileChat fileChat = new FileChat(chatTab, advancedFile);
-                fileChat.setUsername("Panzer1119");
+                advancedFile.getParentFile().mkdirs();
+                final User user_panzer1119 = new User("Panzer1119_FileChat");
+                final FileChat<User> fileChat = new FileChat<User>(chatTab, user_panzer1119, advancedFile);
                 chatTab.setChat(fileChat);
                 fileChat.start();
-                /* //Is done via Exit Hooks
-                Standard.async(() -> {
-                    Thread.sleep(10000);
-                    fileChat.stop();
-                    fileChat.close();
-                });
-                */
             });
         });
     }
