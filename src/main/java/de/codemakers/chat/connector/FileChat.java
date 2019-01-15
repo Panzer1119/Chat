@@ -19,6 +19,7 @@ package de.codemakers.chat.connector;
 import de.codemakers.base.exceptions.CJPException;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
+import de.codemakers.chat.entities.User;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.io.file.AdvancedFile;
 
@@ -33,7 +34,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FileChat extends Chat {
+public class FileChat<U extends User> extends Chat<U> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"); //TODO Temp only
     
@@ -42,8 +43,8 @@ public class FileChat extends Chat {
     protected BufferedWriter bufferedWriter = null;
     protected Timer timer = null;
     
-    public FileChat(ChatTab chatTab, AdvancedFile advancedFile) {
-        super(chatTab);
+    public FileChat(ChatTab chatTab, U selfUser, AdvancedFile advancedFile) {
+        super(chatTab, selfUser);
         Objects.requireNonNull(advancedFile);
         this.advancedFile = advancedFile;
         Main.EXIT_HOOKS.add(() -> {
@@ -78,7 +79,7 @@ public class FileChat extends Chat {
         if (arguments.length >= 1 && arguments[0] instanceof Instant) {
             instant = (Instant) arguments[0];
         }
-        final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getUsername(), message);
+        final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getSelfUser().toDisplayString(), message);
         bufferedWriter.write(temp);
         bufferedWriter.newLine();
         bufferedWriter.flush();
@@ -132,7 +133,7 @@ public class FileChat extends Chat {
     
     @Override
     public String toString() {
-        return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + ", username='" + username + '}';
+        return "FileChat{" + "advancedFile=" + advancedFile + ", started=" + started + ", bufferedWriter=" + bufferedWriter + ", timer=" + timer + ", chatTab=" + chatTab + ", selfUser=" + selfUser + ", users=" + users + '}';
     }
     
 }

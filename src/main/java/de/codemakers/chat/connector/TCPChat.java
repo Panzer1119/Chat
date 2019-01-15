@@ -21,6 +21,7 @@ import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.tough.ToughRunnable;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.entities.NetMessage;
+import de.codemakers.chat.entities.User;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.net.entities.NetCommand;
 import de.codemakers.net.entities.NetObject;
@@ -36,15 +37,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TCPChat extends Chat {
+public class TCPChat<U extends User> extends Chat<U> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
     protected final AtomicLong ping = new AtomicLong(Long.MIN_VALUE);
     protected final ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object> processingSocket;
     
-    public TCPChat(ChatTab chatTab, InetAddress inetAddress, int port) {
-        super(chatTab);
+    public TCPChat(ChatTab chatTab, U selfUser, InetAddress inetAddress, int port) {
+        super(chatTab, selfUser);
         Objects.requireNonNull(inetAddress);
         Main.EXIT_HOOKS.add(() -> {
             stop();
@@ -145,7 +146,7 @@ public class TCPChat extends Chat {
             return false;
         }
         //processingSocket.getOutputStream().writeObject(message); //message is most likely a String, but we want to send NetMessage type objects
-        processingSocket.getOutputStream().writeObject(new NetMessage(processingSocket.getInetAddress(), message, getUsername(), instant));
+        processingSocket.getOutputStream().writeObject(new NetMessage(processingSocket.getInetAddress(), message, getSelfUser().toDisplayString(), instant));
         return true;
     }
     
@@ -171,6 +172,11 @@ public class TCPChat extends Chat {
     @Override
     public void close() throws IOException {
         processingSocket.close();
+    }
+    
+    @Override
+    public String toString() {
+        return "TCPChat{" + "ping=" + ping + ", processingSocket=" + processingSocket + ", chatTab=" + chatTab + ", selfUser=" + selfUser + ", users=" + users + '}';
     }
     
 }

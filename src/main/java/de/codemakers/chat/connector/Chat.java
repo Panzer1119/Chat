@@ -18,30 +18,34 @@ package de.codemakers.chat.connector;
 
 import de.codemakers.base.util.interfaces.Startable;
 import de.codemakers.base.util.interfaces.Stoppable;
+import de.codemakers.chat.entities.User;
 import de.codemakers.chat.gui.ChatTab;
 
 import java.io.Closeable;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Chat implements Closeable, Startable, Stoppable {
+public abstract class Chat<U extends User> implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
-    protected String username = null;
+    protected final U selfUser;
+    protected final List<U> users = new ArrayList<>();
     
-    public Chat(ChatTab chatTab) {
+    public Chat(ChatTab chatTab, U selfUser) {
         this.chatTab = chatTab;
+        this.selfUser = selfUser;
     }
     
     public ChatTab getChatTab() {
         return chatTab;
     }
     
-    public String getUsername() {
-        return username;
+    public U getSelfUser() {
+        return selfUser;
     }
     
-    public Chat setUsername(String username) {
-        this.username = username;
-        return this;
+    public List<U> getUsers() {
+        return users;
     }
     
     public abstract boolean send(Object message, Object... arguments) throws Exception;
@@ -52,7 +56,7 @@ public abstract class Chat implements Closeable, Startable, Stoppable {
     
     @Override
     public String toString() {
-        return "Chat{" + "chatTab=" + chatTab + ", username='" + username + '\'' + '}';
+        return "Chat{" + "chatTab=" + chatTab + ", selfUser=" + selfUser + ", users=" + users + '}';
     }
     
 }
