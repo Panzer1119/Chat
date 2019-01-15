@@ -16,23 +16,23 @@
 
 package de.codemakers.chat.entities;
 
-import de.codemakers.base.util.interfaces.Snowflake;
+import de.codemakers.base.util.interfaces.Timestamp;
 
 import java.util.Objects;
 
-public class User implements Snowflake {
+public class User implements Timestamp {
     
-    private final long id;
+    protected final long timestamp;
     protected String username;
     
-    public User(long id, String username) {
-        this.id = id;
+    public User(String username) {
+        this.timestamp = System.currentTimeMillis();
         this.username = username;
     }
     
     @Override
-    public long getId() {
-        return id;
+    public long getTimestamp() {
+        return timestamp;
     }
     
     public String getUsername() {
@@ -57,22 +57,17 @@ public class User implements Snowflake {
             return false;
         }
         final User user = (User) object;
-        //return id == user.id;
-        if (id == user.id) {
-            return true;
-        }
         return Objects.equals(username, user.username);
     }
     
     @Override
     public int hashCode() {
-        //return Objects.hash(id);
         return username.hashCode();
     }
     
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username='" + username + '\'' + '}';
+        return "User{" + "timestamp=" + timestamp + ", username='" + username + '\'' + '}';
     }
     
 }
