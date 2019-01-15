@@ -24,7 +24,6 @@ public class User implements Snowflake {
     
     private final long id;
     protected String username;
-    //protected final Map<Long, String> displayNames = new ConcurrentHashMap<>();
     
     public User(long id, String username) {
         this.id = id;
@@ -49,29 +48,6 @@ public class User implements Snowflake {
         return username;
     }
     
-    /*
-    public Map<Long, String> getDisplayNames() {
-        return displayNames;
-    }
-    
-    public String addDisplayName(long id, String displayName) {
-        return displayNames.put(id, displayName);
-    }
-    
-    public String removeDisplayName(long id) {
-        return displayNames.remove(id);
-    }
-    
-    public String getDisplayName(long id) {
-        return displayNames.get(id);
-    }
-    
-    public User clearDisplayNames() {
-        displayNames.clear();
-        return this;
-    }
-    */
-    
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -81,12 +57,17 @@ public class User implements Snowflake {
             return false;
         }
         final User user = (User) object;
-        return id == user.id;
+        //return id == user.id;
+        if (id == user.id) {
+            return true;
+        }
+        return Objects.equals(username, user.username);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        //return Objects.hash(id);
+        return username.hashCode();
     }
     
     @Override
