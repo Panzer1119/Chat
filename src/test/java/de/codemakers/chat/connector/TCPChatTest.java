@@ -20,6 +20,7 @@ import de.codemakers.base.Standard;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
+import de.codemakers.chat.entities.NetUser;
 import de.codemakers.chat.gui.ChatTab;
 
 import java.net.InetAddress;
@@ -40,8 +41,8 @@ public class TCPChatTest {
                 Logger.log("Renamed ChatTab", LogLevel.FINER);
                 final InetAddress inetAddress = InetAddress.getLocalHost();
                 final int port = TCPChatServerTest.PORT;
-                final TCPChat tcpChat = new TCPChat(chatTab, inetAddress, port);
-                tcpChat.setUsername("Panzer1119TCP");
+                final NetUser user_panzer1119 = new NetUser("Panzer1119_TCPChat");
+                final TCPChat tcpChat = new TCPChat(chatTab, user_panzer1119, inetAddress, port);
                 chatTab.setChat(tcpChat);
                 tcpChat.start();
             });
