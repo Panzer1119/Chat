@@ -16,6 +16,7 @@
 
 package de.codemakers.chat.connector;
 
+import de.codemakers.base.exceptions.NotYetImplementedRuntimeException;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.base.util.tough.ToughRunnable;
@@ -37,7 +38,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TCPChat extends Chat<NetUser> {
+public class TCPChat extends Chat<NetUser, Object, NetMessage> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
@@ -148,6 +149,12 @@ public class TCPChat extends Chat<NetUser> {
         //processingSocket.getOutputStream().writeObject(message); //message is most likely a String, but we want to send NetMessage type objects
         processingSocket.getOutputStream().writeObject(new NetMessage(processingSocket.getInetAddress(), message, getSelfUser().toDisplayString(), instant));
         return true;
+    }
+    
+    @Override
+    public boolean onMessage(NetMessage message, Object... arguments) throws Exception {
+        //TODO Implement
+        throw new NotYetImplementedRuntimeException();
     }
     
     @Override

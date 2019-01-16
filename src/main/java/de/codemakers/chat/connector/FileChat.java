@@ -17,6 +17,7 @@
 package de.codemakers.chat.connector;
 
 import de.codemakers.base.exceptions.CJPException;
+import de.codemakers.base.exceptions.NotImplementedRuntimeException;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.entities.User;
@@ -34,7 +35,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FileChat<U extends User> extends Chat<U> {
+public class FileChat<U extends User> extends Chat<U, Object, Object> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"); //TODO Temp only
     
@@ -70,6 +71,10 @@ public class FileChat<U extends User> extends Chat<U> {
         }
     }
     
+    protected byte[] preSend(byte[] data) throws Exception {
+        return data;
+    }
+    
     @Override
     public boolean send(Object message, Object... arguments) throws Exception {
         if (!started) {
@@ -86,8 +91,9 @@ public class FileChat<U extends User> extends Chat<U> {
         return true;
     }
     
-    protected byte[] preSend(byte[] data) throws Exception {
-        return data;
+    @Override
+    public boolean onMessage(Object message, Object... arguments) throws Exception {
+        throw new NotImplementedRuntimeException();
     }
     
     @Override
