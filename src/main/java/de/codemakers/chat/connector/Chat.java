@@ -25,7 +25,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Chat<U extends User> implements Closeable, Startable, Stoppable {
+public abstract class Chat<U extends User, MS, MR> implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
     protected final U selfUser;
@@ -48,7 +48,9 @@ public abstract class Chat<U extends User> implements Closeable, Startable, Stop
         return users;
     }
     
-    public abstract boolean send(Object message, Object... arguments) throws Exception;
+    public abstract boolean send(MS message, Object... arguments) throws Exception;
+    
+    public abstract boolean onMessage(MR message, Object... arguments) throws Exception;
     
     protected void scrollEditorPaneToBottom() {
         chatTab.getEditorPane().setCaretPosition(chatTab.getEditorPane().getDocument().getLength());
