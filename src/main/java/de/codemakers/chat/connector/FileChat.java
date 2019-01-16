@@ -80,10 +80,14 @@ public class FileChat<U extends User> extends Chat<U> {
             instant = (Instant) arguments[0];
         }
         final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getSelfUser().toDisplayString(), message);
-        bufferedWriter.write(temp);
+        bufferedWriter.write(new String(preSend(temp.getBytes())));
         bufferedWriter.newLine();
         bufferedWriter.flush();
         return true;
+    }
+    
+    protected byte[] preSend(byte[] data) throws Exception {
+        return data;
     }
     
     @Override
