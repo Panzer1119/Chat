@@ -16,9 +16,9 @@
 
 package de.codemakers.chat.entities;
 
+import de.codemakers.base.exceptions.NotImplementedRuntimeException;
 import de.codemakers.security.interfaces.Decryptor;
 import de.codemakers.security.interfaces.Encryptor;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Objects;
 
@@ -75,7 +75,7 @@ public class SecureUser extends User implements Encryptor, Decryptor {
     
     @Override
     public byte[] crypt(byte[] data, byte[] iv) throws Exception {
-        throw new NotImplementedException();
+        throw new NotImplementedRuntimeException();
     }
     
     @Override
