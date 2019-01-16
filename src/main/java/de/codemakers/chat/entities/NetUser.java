@@ -16,10 +16,12 @@
 
 package de.codemakers.chat.entities;
 
-import javax.crypto.SecretKey;
+import de.codemakers.security.interfaces.Decryptor;
+import de.codemakers.security.interfaces.Encryptor;
+import de.codemakers.security.interfaces.Signer;
+import de.codemakers.security.interfaces.Verifier;
+
 import java.net.InetAddress;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 
 public class NetUser extends TrustedUser {
     
@@ -30,24 +32,16 @@ public class NetUser extends TrustedUser {
         super(username);
     }
     
-    public NetUser(String username, SecretKey secretKey) {
-        super(username, secretKey);
+    public NetUser(String username, Signer signer, Verifier verifier) {
+        super(username, signer, verifier);
     }
     
-    public NetUser(String username, PublicKey publicKey) {
-        super(username, publicKey);
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor) {
+        super(username, encryptor, decryptor);
     }
     
-    public NetUser(String username, PublicKey publicKey, PrivateKey privateKey) {
-        super(username, publicKey, privateKey);
-    }
-    
-    public NetUser(String username, SecretKey secretKey, PublicKey publicKey) {
-        super(username, secretKey, publicKey);
-    }
-    
-    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, PrivateKey privateKey) {
-        super(username, secretKey, publicKey, privateKey);
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, Signer signer, Verifier verifier) {
+        super(username, encryptor, decryptor, signer, verifier);
     }
     
     public NetUser(String username, InetAddress inetAddress, int port) {
@@ -56,32 +50,20 @@ public class NetUser extends TrustedUser {
         this.port = port;
     }
     
-    public NetUser(String username, SecretKey secretKey, InetAddress inetAddress, int port) {
-        super(username, secretKey);
+    public NetUser(String username, Signer signer, Verifier verifier, InetAddress inetAddress, int port) {
+        super(username, signer, verifier);
         this.inetAddress = inetAddress;
         this.port = port;
     }
     
-    public NetUser(String username, PublicKey publicKey, InetAddress inetAddress, int port) {
-        super(username, publicKey);
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, InetAddress inetAddress, int port) {
+        super(username, encryptor, decryptor);
         this.inetAddress = inetAddress;
         this.port = port;
     }
     
-    public NetUser(String username, PublicKey publicKey, PrivateKey privateKey, InetAddress inetAddress, int port) {
-        super(username, publicKey, privateKey);
-        this.inetAddress = inetAddress;
-        this.port = port;
-    }
-    
-    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, InetAddress inetAddress, int port) {
-        super(username, secretKey, publicKey);
-        this.inetAddress = inetAddress;
-        this.port = port;
-    }
-    
-    public NetUser(String username, SecretKey secretKey, PublicKey publicKey, PrivateKey privateKey, InetAddress inetAddress, int port) {
-        super(username, secretKey, publicKey, privateKey);
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, Signer signer, Verifier verifier, InetAddress inetAddress, int port) {
+        super(username, encryptor, decryptor, signer, verifier);
         this.inetAddress = inetAddress;
         this.port = port;
     }
@@ -106,7 +88,7 @@ public class NetUser extends TrustedUser {
     
     @Override
     public String toString() {
-        return "NetUser{" + "inetAddress=" + inetAddress + ", port=" + port + ", publicKey=" + publicKey + ", verifier=" + verifier + ", aes_mode='" + aes_mode + '\'' + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
+        return "NetUser{" + "inetAddress=" + inetAddress + ", port=" + port + ", signer=" + signer + ", verifier=" + verifier + ", encryptor=" + encryptor + ", decryptor=" + decryptor + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
     }
     
 }
