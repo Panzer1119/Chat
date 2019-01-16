@@ -82,19 +82,58 @@ public class TrustedUser extends SecureUser implements Signer, Verifier {
     }
     
     public TrustedSecureData toTrustedData(byte[] data) {
+        if (signer == null) {
+            return null;
+        }
         return new TrustedSecureData(data, signer);
     }
     
     public TrustedSecureData toTrustedSecureData(byte[] data) {
+        if (encryptor == null || signer == null) {
+            return null;
+        }
         return new TrustedSecureData(data, encryptor, signer);
     }
     
     public boolean isValid(TrustedSecureData trustedSecureData) {
+        if (trustedSecureData == null || verifier == null) {
+            return false;
+        }
         return trustedSecureData.verifyWithoutException(verifier);
     }
     
-    public byte[] fromTrustedData(TrustedSecureData trustedSecureData) {
+    public byte[] fromTrustedDataWithoutValidation(TrustedSecureData trustedSecureData) {
+        if (trustedSecureData == null) {
+            return null;
+        }
         return trustedSecureData.getData();
+    }
+    
+    public byte[] fromTrustedData(TrustedSecureData trustedSecureData) {
+        if (trustedSecureData == null || verifier == null) {
+            return null;
+        }
+        if (!isValid(trustedSecureData)) {
+            throw new SecurityException(TrustedSecureData.class.getSimpleName() + " could not be validated");
+        }
+        return trustedSecureData.getData();
+    }
+    
+    public byte[] fromTrustedSecureDataWithoutValidation(TrustedSecureData trustedSecureData) {
+        if (trustedSecureData == null || decryptor == null) {
+            return null;
+        }
+        return trustedSecureData.decryptWithoutException(decryptor);
+    }
+    
+    public byte[] fromTrustedSecureData(TrustedSecureData trustedSecureData) {
+        if (trustedSecureData == null || verifier == null || decryptor == null) {
+            return null;
+        }
+        if (!isValid(trustedSecureData)) {
+            throw new SecurityException(TrustedSecureData.class.getSimpleName() + " could not be validated");
+        }
+        return trustedSecureData.decryptWithoutException(decryptor);
     }
     
     @Override

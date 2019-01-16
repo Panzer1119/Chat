@@ -85,10 +85,16 @@ public class SecureUser extends User implements Encryptor, Decryptor {
     }
     
     public SecureData toSecureData(byte[] data) {
+        if (encryptor == null) {
+            return null;
+        }
         return new SecureData(data, encryptor);
     }
     
     public byte[] fromSecureData(SecureData secureData) {
+        if (secureData == null || decryptor == null) {
+            return null;
+        }
         return secureData.decryptWithoutException(decryptor);
     }
     
