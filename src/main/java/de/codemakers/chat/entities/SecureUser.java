@@ -16,86 +16,61 @@
 
 package de.codemakers.chat.entities;
 
-import de.codemakers.base.logger.Logger;
 import de.codemakers.security.interfaces.Decryptor;
 import de.codemakers.security.interfaces.Encryptor;
-import de.codemakers.security.util.AESCryptUtil;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import java.util.Objects;
 
 public class SecureUser extends User implements Encryptor, Decryptor {
     
-    public static String AES_MODE_STANDARD = AESCryptUtil.MODE_AES_CBC_PKCS5Padding;
-    
-    //TODO Maybe just have an Encryptor and an Decryptor object, which are accessible with via this wrapper class? So the user can implement his own cryptography
-    protected String aes_mode = AES_MODE_STANDARD;
-    private SecretKey secretKey = null;
-    private transient Cipher cipher_encrypt = null;
-    private transient Cipher cipher_decrypt = null;
+    private transient Encryptor encryptor = null;
+    private transient Decryptor decryptor = null;
     
     public SecureUser(String username) {
         super(username);
     }
     
-    public SecureUser(String username, SecretKey secretKey) {
+    public SecureUser(String username, Encryptor encryptor, Decryptor decryptor) {
         super(username);
-        setSecretKey(secretKey);
+        this.encryptor = encryptor;
+        this.decryptor = decryptor;
     }
     
-    public String getAESMode() {
-        return aes_mode;
+    public Encryptor getEncryptor() {
+        return encryptor;
     }
     
-    public SecureUser setAESMode(String aes_mode) {
-        this.aes_mode = aes_mode;
+    public SecureUser setEncryptor(Encryptor encryptor) {
+        this.encryptor = encryptor;
         return this;
     }
     
-    public SecretKey getSecretKey() {
-        return secretKey;
+    public Decryptor getDecryptor() {
+        return decryptor;
     }
     
-    public SecureUser setSecretKey(SecretKey secretKey) {
-        this.secretKey = secretKey;
-        resetCiphers();
+    public SecureUser setDecryptor(Decryptor decryptor) {
+        this.decryptor = decryptor;
         return this;
-    }
-    
-    public boolean resetCiphers() {
-        try {
-            cipher_encrypt = Cipher.getInstance(aes_mode);
-            cipher_decrypt = Cipher.getInstance(aes_mode);
-            return true;
-        } catch (Exception ex) {
-            cipher_encrypt = null;
-            cipher_decrypt = null;
-            Logger.handleError(ex);
-            return false;
-        }
     }
     
     @Override
     public byte[] encrypt(byte[] data, byte[] iv) throws Exception {
-        if (cipher_encrypt == null) {
+        if (encryptor == null) {
             return null;
         }
         Objects.requireNonNull(iv);
-        cipher_encrypt.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(iv));
-        return cipher_encrypt.doFinal(data);
+        return encryptor.encrypt(data, iv);
     }
     
     @Override
     public byte[] decrypt(byte[] data, byte[] iv) throws Exception {
-        if (cipher_decrypt == null) {
+        if (decryptor == null) {
             return null;
         }
         Objects.requireNonNull(iv);
-        cipher_encrypt.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
-        return cipher_decrypt.doFinal(data);
+        return decryptor.decrypt(data, iv);
     }
     
     @Override
@@ -110,7 +85,7 @@ public class SecureUser extends User implements Encryptor, Decryptor {
     
     @Override
     public String toString() {
-        return "SecureUser{" + "aes_mode='" + aes_mode + '\'' + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
+        return "SecureUser{" + "encryptor=" + encryptor + ", decryptor=" + decryptor + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
     }
     
 }
