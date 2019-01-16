@@ -16,6 +16,7 @@
 
 package de.codemakers.chat.entities;
 
+import de.codemakers.security.entities.TrustedSecureData;
 import de.codemakers.security.interfaces.Decryptor;
 import de.codemakers.security.interfaces.Encryptor;
 import de.codemakers.security.interfaces.Signer;
@@ -78,6 +79,22 @@ public class TrustedUser extends SecureUser implements Signer, Verifier {
             return null;
         }
         return signer.sign(data);
+    }
+    
+    public TrustedSecureData toTrustedData(byte[] data) {
+        return new TrustedSecureData(data, signer);
+    }
+    
+    public TrustedSecureData toTrustedSecureData(byte[] data) {
+        return new TrustedSecureData(data, encryptor, signer);
+    }
+    
+    public boolean isValid(TrustedSecureData trustedSecureData) {
+        return trustedSecureData.verifyWithoutException(verifier);
+    }
+    
+    public byte[] fromTrustedData(TrustedSecureData trustedSecureData) {
+        return trustedSecureData.getData();
     }
     
     @Override

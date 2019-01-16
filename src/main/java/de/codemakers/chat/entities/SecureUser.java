@@ -17,6 +17,7 @@
 package de.codemakers.chat.entities;
 
 import de.codemakers.base.exceptions.NotImplementedRuntimeException;
+import de.codemakers.security.entities.SecureData;
 import de.codemakers.security.interfaces.Decryptor;
 import de.codemakers.security.interfaces.Encryptor;
 
@@ -81,6 +82,14 @@ public class SecureUser extends User implements Encryptor, Decryptor {
     @Override
     public byte[] crypt(byte[] data) throws Exception {
         return crypt(data, (byte[]) null);
+    }
+    
+    public SecureData toSecureData(byte[] data) {
+        return new SecureData(data, encryptor);
+    }
+    
+    public byte[] fromSecureData(SecureData secureData) {
+        return secureData.decryptWithoutException(decryptor);
     }
     
     @Override
