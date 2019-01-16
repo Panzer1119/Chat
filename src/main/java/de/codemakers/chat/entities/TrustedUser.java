@@ -16,88 +16,51 @@
 
 package de.codemakers.chat.entities;
 
-import de.codemakers.base.logger.Logger;
+import de.codemakers.security.interfaces.Decryptor;
+import de.codemakers.security.interfaces.Encryptor;
 import de.codemakers.security.interfaces.Signer;
 import de.codemakers.security.interfaces.Verifier;
-import de.codemakers.security.util.EasyCryptUtil;
-
-import javax.crypto.SecretKey;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 
 public class TrustedUser extends SecureUser implements Signer, Verifier {
     
-    //TODO Maybe just have an Signer and an Verifier object, which are accessible with via this wrapper class? So the user can implement his own sign/verify procedure
-    protected PublicKey publicKey = null;
-    private PrivateKey privateKey = null;
-    protected transient Verifier verifier = null;
-    private transient Signer signer = null;
+    protected Signer signer = null;
+    protected Verifier verifier = null;
     
     public TrustedUser(String username) {
         super(username);
     }
     
-    public TrustedUser(String username, SecretKey secretKey) {
-        super(username, secretKey);
-    }
-    
-    public TrustedUser(String username, PublicKey publicKey) {
+    public TrustedUser(String username, Signer signer, Verifier verifier) {
         super(username);
-        setPublicKey(publicKey);
+        this.signer = signer;
+        this.verifier = verifier;
     }
     
-    public TrustedUser(String username, PublicKey publicKey, PrivateKey privateKey) {
-        super(username);
-        setPublicKey(publicKey);
-        setPrivateKey(privateKey);
+    public TrustedUser(String username, Encryptor encryptor, Decryptor decryptor) {
+        super(username, encryptor, decryptor);
     }
     
-    public TrustedUser(String username, SecretKey secretKey, PublicKey publicKey) {
-        super(username, secretKey);
-        setPublicKey(publicKey);
+    public TrustedUser(String username, Encryptor encryptor, Decryptor decryptor, Signer signer, Verifier verifier) {
+        super(username, encryptor, decryptor);
+        this.signer = signer;
+        this.verifier = verifier;
     }
     
-    public TrustedUser(String username, SecretKey secretKey, PublicKey publicKey, PrivateKey privateKey) {
-        super(username, secretKey);
-        setPublicKey(publicKey);
-        setPrivateKey(privateKey);
+    public Signer getSigner() {
+        return signer;
     }
     
-    public PublicKey getPublicKey() {
-        return publicKey;
-    }
-    
-    public TrustedUser setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
-        if (publicKey != null) {
-            try {
-                verifier = EasyCryptUtil.verifierOfSHA256withRSA(publicKey);
-            } catch (Exception ex) {
-                verifier = null;
-                Logger.handleError(ex);
-            }
-        } else {
-            verifier = null;
-        }
+    public TrustedUser setSigner(Signer signer) {
+        this.signer = signer;
         return this;
     }
     
-    public PrivateKey getPrivateKey() {
-        return privateKey;
+    public Verifier getVerifier() {
+        return verifier;
     }
     
-    public TrustedUser setPrivateKey(PrivateKey privateKey) {
-        this.privateKey = privateKey;
-        if (privateKey != null) {
-            try {
-                signer = EasyCryptUtil.signerOfSHA256withRSA(privateKey);
-            } catch (Exception ex) {
-                signer = null;
-                Logger.handleError(ex);
-            }
-        } else {
-            signer = null;
-        }
+    public TrustedUser setVerifier(Verifier verifier) {
+        this.verifier = verifier;
         return this;
     }
     
@@ -119,7 +82,7 @@ public class TrustedUser extends SecureUser implements Signer, Verifier {
     
     @Override
     public String toString() {
-        return "TrustedUser{" + "publicKey=" + publicKey + ", verifier=" + verifier + ", aes_mode='" + aes_mode + '\'' + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
+        return "TrustedUser{" + "signer=" + signer + ", verifier=" + verifier + ", encryptor=" + encryptor + ", decryptor=" + decryptor + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
     }
     
 }

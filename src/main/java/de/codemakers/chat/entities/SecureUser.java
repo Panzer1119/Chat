@@ -24,8 +24,8 @@ import java.util.Objects;
 
 public class SecureUser extends User implements Encryptor, Decryptor {
     
-    private transient Encryptor encryptor = null;
-    private transient Decryptor decryptor = null;
+    protected transient Encryptor encryptor = null;
+    protected transient Decryptor decryptor = null;
     
     public SecureUser(String username) {
         super(username);
