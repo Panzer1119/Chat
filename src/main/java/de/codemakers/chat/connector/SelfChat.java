@@ -28,6 +28,7 @@ import de.codemakers.security.util.EasyCryptUtil;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Document;
 import java.awt.*;
 import java.io.IOException;
@@ -98,15 +99,6 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
         chatTab.getEditorPane().setContentType("text/html");
         chatTab.getEditorPane().setEditable(false);
         chatTab.getEditorPane().addHyperlinkListener((event) -> {
-            /*
-            Logger.log("HyperlinkEvent");
-            Logger.log("event==================" + event);
-            Logger.log("event.getDescription===" + event.getDescription());
-            Logger.log("event.getEventType=====" + event.getEventType());
-            Logger.log("event.getInputEvent====" + event.getInputEvent());
-            Logger.log("event.getSourceElement=" + event.getSourceElement());
-            Logger.log("event.getURL===========" + event.getURL());
-            */
             if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED && Desktop.isDesktopSupported()) {
                 try {
                     final URI uri = event.getURL().toURI();
@@ -121,7 +113,7 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
                 Logger.log("Desktop is not supported!", LogLevel.WARNING);
             }
         });
-        chatTab.getEditorPane().setText("<h1>h1</h1><br><a href=\"http://google.de\">Google</a>");
+        //chatTab.getEditorPane().setText("<h1>h1</h1><br><a href=\"http://google.de\">Google</a>");
         //HTMLEditorKit
         //TODO Test only END
         return true;
@@ -129,6 +121,10 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
     
     @Override
     public boolean stop() throws Exception {
+        for (HyperlinkListener hyperlinkListener : chatTab.getEditorPane().getHyperlinkListeners()) {
+            chatTab.getEditorPane().removeHyperlinkListener(hyperlinkListener);
+        }
+        chatTab.getEditorPane().setText("");
         return true;
     }
     
