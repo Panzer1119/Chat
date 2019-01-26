@@ -23,6 +23,7 @@ import de.codemakers.base.util.tough.ToughRunnable;
 import de.codemakers.chat.Main;
 import de.codemakers.chat.entities.NetMessage;
 import de.codemakers.chat.entities.NetUser;
+import de.codemakers.chat.entities.TextMessage;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.net.entities.NetCommand;
 import de.codemakers.net.entities.NetObject;
@@ -38,7 +39,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TCPChat extends Chat<NetUser, Object, NetMessage> {
+public class TCPChat extends Chat<NetUser, TextMessage<NetUser>, Object, NetMessage> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
