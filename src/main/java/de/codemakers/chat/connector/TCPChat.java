@@ -147,7 +147,7 @@ public class TCPChat extends Chat<NetUser, Object, NetMessage> {
             return false;
         }
         //processingSocket.getOutputStream().writeObject(message); //message is most likely a String, but we want to send NetMessage type objects
-        processingSocket.getOutputStream().writeObject(new NetMessage(processingSocket.getInetAddress(), message, getSelfUser().toDisplayString(), instant));
+        processingSocket.getOutputStream().writeObject(new NetMessage(getSelfUser().getNetEndpoint(), null, message, getSelfUser().toDisplayString(), instant));
         return true;
     }
     

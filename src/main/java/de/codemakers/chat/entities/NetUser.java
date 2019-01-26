@@ -16,6 +16,7 @@
 
 package de.codemakers.chat.entities;
 
+import de.codemakers.net.entities.NetEndpoint;
 import de.codemakers.security.interfaces.Decryptor;
 import de.codemakers.security.interfaces.Encryptor;
 import de.codemakers.security.interfaces.Signer;
@@ -25,8 +26,7 @@ import java.net.InetAddress;
 
 public class NetUser extends TrustedUser {
     
-    protected InetAddress inetAddress;
-    protected int port;
+    protected NetEndpoint netEndpoint;
     
     public NetUser(String username) {
         super(username);
@@ -44,51 +44,52 @@ public class NetUser extends TrustedUser {
         super(username, encryptor, decryptor, signer, verifier);
     }
     
-    public NetUser(String username, InetAddress inetAddress, int port) {
+    public NetUser(String username, NetEndpoint netEndpoint) {
         super(username);
-        this.inetAddress = inetAddress;
-        this.port = port;
+        this.netEndpoint = netEndpoint;
     }
     
-    public NetUser(String username, Signer signer, Verifier verifier, InetAddress inetAddress, int port) {
+    public NetUser(String username, Signer signer, Verifier verifier, NetEndpoint netEndpoint) {
         super(username, signer, verifier);
-        this.inetAddress = inetAddress;
-        this.port = port;
+        this.netEndpoint = netEndpoint;
     }
     
-    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, InetAddress inetAddress, int port) {
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, NetEndpoint netEndpoint) {
         super(username, encryptor, decryptor);
-        this.inetAddress = inetAddress;
-        this.port = port;
+        this.netEndpoint = netEndpoint;
     }
     
-    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, Signer signer, Verifier verifier, InetAddress inetAddress, int port) {
+    public NetUser(String username, Encryptor encryptor, Decryptor decryptor, Signer signer, Verifier verifier, NetEndpoint netEndpoint) {
         super(username, encryptor, decryptor, signer, verifier);
-        this.inetAddress = inetAddress;
-        this.port = port;
+        this.netEndpoint = netEndpoint;
+    }
+    
+    public NetEndpoint getNetEndpoint() {
+        return netEndpoint;
+    }
+    
+    public NetUser setNetEndpoint(NetEndpoint netEndpoint) {
+        this.netEndpoint = netEndpoint;
+        return this;
     }
     
     public InetAddress getInetAddress() {
-        return inetAddress;
-    }
-    
-    public NetUser setInetAddress(InetAddress inetAddress) {
-        this.inetAddress = inetAddress;
-        return this;
+        if (netEndpoint == null) {
+            return null;
+        }
+        return netEndpoint.getInetAddress();
     }
     
     public int getPort() {
-        return port;
-    }
-    
-    public NetUser setPort(int port) {
-        this.port = port;
-        return this;
+        if (netEndpoint == null) {
+            return -1;
+        }
+        return netEndpoint.getPort();
     }
     
     @Override
     public String toString() {
-        return "NetUser{" + "inetAddress=" + inetAddress + ", port=" + port + ", signer=" + signer + ", verifier=" + verifier + ", encryptor=" + encryptor + ", decryptor=" + decryptor + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
+        return "NetUser{" + "netEndpoint=" + netEndpoint + ", signer=" + signer + ", verifier=" + verifier + ", encryptor=" + encryptor + ", decryptor=" + decryptor + ", timestamp=" + timestamp + ", username='" + username + '\'' + '}';
     }
     
 }
