@@ -27,12 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Chat<U extends User, MS, MR> implements Closeable, Startable, Stoppable {
+public abstract class Chat<U extends User, M extends Message<U>, MS, MR> implements Closeable, Startable, Stoppable {
     
     protected final ChatTab chatTab;
     protected final U selfUser;
     protected final List<U> users = new ArrayList<>();
-    protected final List<Message<U>> messages = new ArrayList<>();
+    protected final List<M> messages = new ArrayList<>();
     
     public Chat(ChatTab chatTab, U selfUser) {
         Objects.requireNonNull(chatTab);
@@ -53,7 +53,7 @@ public abstract class Chat<U extends User, MS, MR> implements Closeable, Startab
         return users;
     }
     
-    public List<Message<U>> getMessages() {
+    public List<M> getMessages() {
         return messages;
     }
     

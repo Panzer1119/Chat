@@ -59,6 +59,10 @@ public class ChatWindow {
         initFrame();
     }
     
+    public JFrame getFrame() {
+        return frame;
+    }
+    
     protected void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(STANDARD_SIZE);
