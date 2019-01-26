@@ -31,7 +31,7 @@ import java.util.List;
 public class Main {
     
     public static final String NAME = "Chat";
-    public static final String VERSION = "0.0";
+    public static final String VERSION = "0.1";
     public static final String TITLE = NAME + " v" + VERSION;
     
     public static final AdvancedFile LANGUAGE_FILE_EN = new AdvancedFile("intern:/de/codemakers/chat/lang/lang_EN.txt");
