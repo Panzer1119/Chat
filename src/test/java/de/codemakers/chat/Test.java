@@ -59,7 +59,7 @@ public class Test {
                 final FileChat<SecureUser> fileChat = new FileChat<SecureUser>(chatTab, user_panzer1119, advancedFile) {
                     @Override
                     protected byte[] preSend(byte[] data) throws Exception {
-                        EasyCryptUtil.generateRandomIV(iv, EasyCryptUtil.getSecurestRandom());
+                        EasyCryptUtil.generateRandomBytes(iv, EasyCryptUtil.getSecurestRandom());
                         final byte[] data_encrypted = selfUser.encrypt(data, iv);
                         final byte[] data_encrypted_and_iv = new byte[data_encrypted.length + iv.length];
                         System.arraycopy(data_encrypted, 0, data_encrypted_and_iv, 0, data_encrypted.length);
