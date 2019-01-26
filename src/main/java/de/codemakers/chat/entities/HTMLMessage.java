@@ -25,6 +25,7 @@ public class HTMLMessage<U extends User> extends TextMessage<U> {
     
     public HTMLMessage(Instant instant, U user, String content, DateTimeFormatter dateTimeFormatter) {
         super(instant, user, content);
+        this.dateTimeFormatter = dateTimeFormatter;
     }
     
     public DateTimeFormatter getDateTimeFormatter() {
