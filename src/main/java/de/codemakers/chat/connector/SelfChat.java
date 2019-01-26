@@ -29,26 +29,20 @@ import de.codemakers.security.util.EasyCryptUtil;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, byte[]> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
-    private Document document;
-    
     public SelfChat(ChatTab chatTab, U selfUser) {
         super(chatTab, selfUser);
-        test();
     }
     
     @Override
@@ -113,7 +107,6 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
                 Logger.log("Desktop is not supported!", LogLevel.WARNING);
             }
         });
-        //chatTab.getEditorPane().setText("<h1>h1</h1><br><a href=\"http://google.de\">Google</a>");
         //HTMLEditorKit
         //TODO Test only END
         return true;
@@ -131,44 +124,6 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
     @Override
     public void close() throws IOException {
         messages.clear();
-    }
-    
-    public void test() {
-        final JFrame frame = new JFrame(SelfChat.class.getSimpleName());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(900, 800));
-        final JTextArea textArea = new JTextArea();
-        /*
-        textArea.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                editorPane.setText(textArea.getText());
-            }
-        
-            @Override
-            public void keyPressed(KeyEvent e) {
-                editorPane.setText(textArea.getText());
-            }
-        
-            @Override
-            public void keyReleased(KeyEvent e) {
-                editorPane.setText(textArea.getText());
-            }
-        });
-        */
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        frame.add(scrollPane, BorderLayout.CENTER);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        final Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                textArea.setText(chatTab.getEditorPane().getText());
-            }
-        }, 0, 500);
     }
     
 }
