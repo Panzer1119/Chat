@@ -162,6 +162,10 @@ public class TCPChat extends Chat<NetUser, Object, NetMessage> {
         if (!processingSocket.connect()) {
             return false;
         }
+        //TODO Test only START
+        chatTab.getEditorPane().setContentType("text/html");
+        //HTMLEditorKit
+        //TODO Test only END
         return processingSocket.start();
     }
     
