@@ -43,7 +43,7 @@ public class TCPChat extends Chat<NetUser, Object, NetMessage> {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS"); //TODO Temp only
     
     protected final AtomicLong ping = new AtomicLong(Long.MIN_VALUE);
-    protected final ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object> processingSocket;
+    protected final ProcessingSocket<ObjectInputStream, ObjectOutputStream> processingSocket;
     
     public TCPChat(ChatTab chatTab, NetUser selfUser, InetAddress inetAddress, int port) {
         super(chatTab, selfUser);
@@ -52,7 +52,7 @@ public class TCPChat extends Chat<NetUser, Object, NetMessage> {
             stop();
             close();
         }); //FIXME Only for testing?
-        processingSocket = new ProcessingSocket<ObjectInputStream, ObjectOutputStream, Object>(inetAddress, port) {
+        processingSocket = new ProcessingSocket<ObjectInputStream, ObjectOutputStream>(inetAddress, port) {
             @Override
             protected ObjectOutputStream toInternOutputStream(OutputStream outputStream) throws Exception {
                 return new ObjectOutputStream(outputStream);

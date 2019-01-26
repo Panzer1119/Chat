@@ -57,11 +57,10 @@ public class SelfChat<U extends User> extends Chat<U, Object, byte[]> {
             final byte[] temp_encrypted_and_iv = new byte[temp_encrypted.length + iv.length];
             System.arraycopy(temp_encrypted, 0, temp_encrypted_and_iv, 0, temp_encrypted.length);
             System.arraycopy(iv, 0, temp_encrypted_and_iv, temp_encrypted.length, iv.length);
-            onMessage(temp_encrypted_and_iv);
+            return onMessage(temp_encrypted_and_iv);
         } else {
-            onMessage(temp.getBytes());
+            return onMessage(temp.getBytes());
         }
-        return true;
     }
     
     @Override
