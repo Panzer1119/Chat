@@ -88,15 +88,6 @@ public class SelfChat<U extends User> extends Chat<U, HTMLMessage<U>, Object, by
         final HTMLMessage<U> htmlMessage = new HTMLMessage<>(Instant.now(), getSelfUser(), temp, DATE_TIME_FORMATTER);
         messages.add(htmlMessage);
         chatTab.getEditorPane().setText(messages.stream().map(Message::toString).collect(Collectors.joining("<br>")));
-        if (chatTab.getEditorPane().getText().isEmpty()) {
-            //chatTab.getEditorPane().setText(temp);
-            //chatTab.getEditorPane().setText(htmlMessage.toString());
-        } else {
-            //chatTab.getEditorPane().setText(chatTab.getEditorPane().getText() + "\n" + temp);
-            //chatTab.getEditorPane().setText(chatTab.getEditorPane().getText() + "<br>" + htmlMessage.toString());
-        }
-        //chatTab.getEditorPane().setText(htmlMessage.toString());
-        //chatTab.getEditorPane().setText(chatTab.getEditorPane().getText() + "<br>" + htmlMessage.toString());
         scrollEditorPaneToBottom();
         return true;
     }
