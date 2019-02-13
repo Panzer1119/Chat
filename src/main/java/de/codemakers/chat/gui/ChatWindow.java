@@ -19,18 +19,23 @@ package de.codemakers.chat.gui;
 import de.codemakers.base.logger.LogLevel;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
+import de.codemakers.io.file.AdvancedFile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatWindow {
+    
+    public static final AdvancedFile ADVANCED_FILE_ICON_CHAT_WINDOW = new AdvancedFile("intern:/de/codemakers/chat/icons/chat-2-icon_32x32.png");
     
     public static final Dimension STANDARD_SIZE = new Dimension(1000, 800);
     
@@ -50,8 +55,12 @@ public class ChatWindow {
     protected final JButton button_send = new JButton(Main.LOCALIZER.localize("button_input_send", "Send"));
     // GUI End
     
-    public ChatWindow() {
+    public ChatWindow() { //TODO Create a JFrameManager like class (in CJP-Base?) to manage Titles of the JFrame etc. (like i did it in JAddOn library)
         initFrame();
+    }
+    
+    public JFrame getFrame() {
+        return frame;
     }
     
     protected void initFrame() {
@@ -67,7 +76,7 @@ public class ChatWindow {
             @Override
             public void keyTyped(KeyEvent e) {
             }
-    
+            
             @Override
             public void keyPressed(KeyEvent e) {
                 //Logger.log("KeyEvent=" + e + ", KeyCode=" + e.getKeyCode());
@@ -75,7 +84,7 @@ public class ChatWindow {
                     send();
                 }
             }
-    
+            
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -84,6 +93,15 @@ public class ChatWindow {
         button_send.addActionListener((event) -> send());
         panel_input.add(button_send, BorderLayout.EAST);
         frame.add(panel_input, BorderLayout.SOUTH);
+        setIconImage(ADVANCED_FILE_ICON_CHAT_WINDOW);
+    }
+    
+    private void setIconImage(AdvancedFile advancedFile) {
+        try (InputStream inputStream = advancedFile.createInputStream()) {
+            frame.setIconImage(ImageIO.read(inputStream));
+        } catch (Exception ex) {
+            Logger.handleError(ex);
+        }
     }
     
     private boolean send() {
@@ -95,7 +113,7 @@ public class ChatWindow {
             return false;
         }
         try {
-            if (chatTab.getChat().send(text, instant)) {
+            if (chatTab.send(text, instant)) {
                 textField_input.setText("");
                 focusTextField();
                 return true;

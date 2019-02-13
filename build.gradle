@@ -30,6 +30,11 @@ repositories {
 
 dependencies {
     //implementation 'com.github.Panzer1119:CJP-Net:dd3adb66b1' //12.01.2019 22:21
-    implementation 'com.github.Panzer1119:CJP-Net:02ca37edff' //12.01.2019 23:21
+    //implementation 'com.github.Panzer1119:CJP-Net:02ca37edff' //12.01.2019 23:21
+    //implementation 'com.github.Panzer1119:CJP-Net:bfe482d95b' //14.01.2019 12:26
+    //implementation 'com.github.Panzer1119:CJP-Net:bf8dbd4fff' //15.01.2019 21:29
+    //implementation 'com.github.Panzer1119:CJP-Net:b442c88c00' //16.01.2019 17:59
+    implementation 'com.github.Panzer1119:CJP-Net:Wrapper-T1-SNAPSHOT' //26.01.2019 10:17
+    //implementation 'com.github.Panzer1119:CJP-Net:4256bf59bc' //26.01.2019 10:15
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

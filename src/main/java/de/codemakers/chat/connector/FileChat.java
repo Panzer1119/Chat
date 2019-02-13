@@ -17,8 +17,11 @@
 package de.codemakers.chat.connector;
 
 import de.codemakers.base.exceptions.CJPException;
+import de.codemakers.base.exceptions.NotImplementedRuntimeException;
 import de.codemakers.base.logger.Logger;
 import de.codemakers.chat.Main;
+import de.codemakers.chat.entities.TextMessage;
+import de.codemakers.chat.entities.User;
 import de.codemakers.chat.gui.ChatTab;
 import de.codemakers.io.file.AdvancedFile;
 
@@ -33,7 +36,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FileChat extends Chat {
+public class FileChat<U extends User> extends Chat<U, TextMessage<U>, Object, Object> {
     
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"); //TODO Temp only
     
@@ -42,14 +45,14 @@ public class FileChat extends Chat {
     protected BufferedWriter bufferedWriter = null;
     protected Timer timer = null;
     
-    public FileChat(ChatTab chatTab, AdvancedFile advancedFile) {
-        super(chatTab);
+    public FileChat(ChatTab chatTab, U selfUser, AdvancedFile advancedFile) {
+        super(chatTab, selfUser);
         Objects.requireNonNull(advancedFile);
         this.advancedFile = advancedFile;
         Main.EXIT_HOOKS.add(() -> {
             stop();
             close();
-        }); //FIXME Only for testing
+        }); //FIXME Only for testing?
     }
     
     public boolean isStarted() {
@@ -65,8 +68,12 @@ public class FileChat extends Chat {
         final String text_new = new String(advancedFile.readBytes());
         if (!Objects.equals(text_old, text_new)) {
             chatTab.getEditorPane().setText(text_new);
-            scrollToBottom();
+            scrollEditorPaneToBottom();
         }
+    }
+    
+    protected byte[] preSend(byte[] data) throws Exception {
+        return data;
     }
     
     @Override
@@ -78,11 +85,16 @@ public class FileChat extends Chat {
         if (arguments.length >= 1 && arguments[0] instanceof Instant) {
             instant = (Instant) arguments[0];
         }
-        final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getUsername(), message);
-        bufferedWriter.write(temp);
+        final String temp = String.format("[%s] %s: %s", LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(DATE_TIME_FORMATTER), getSelfUser().toDisplayString(), message);
+        bufferedWriter.write(new String(preSend(temp.getBytes())));
         bufferedWriter.newLine();
         bufferedWriter.flush();
         return true;
+    }
+    
+    @Override
+    public boolean onMessage(Object message, Object... arguments) throws Exception {
+        throw new NotImplementedRuntimeException();
     }
     
     @Override
@@ -132,11 +144,7 @@ public class FileChat extends Chat {
     
     @Override
     public String toString() {
-        return "FileChat{" + "advancedFile=" + advancedFile + ", chatTab=" + chatTab + ", username='" + username + '}';
-    }
-    
-    protected void scrollToBottom() {
-        chatTab.getEditorPane().setCaretPosition(chatTab.getEditorPane().getText().length());
+        return "FileChat{" + "advancedFile=" + advancedFile + ", started=" + started + ", bufferedWriter=" + bufferedWriter + ", timer=" + timer + ", chatTab=" + chatTab + ", selfUser=" + selfUser + ", users=" + users + '}';
     }
     
 }
